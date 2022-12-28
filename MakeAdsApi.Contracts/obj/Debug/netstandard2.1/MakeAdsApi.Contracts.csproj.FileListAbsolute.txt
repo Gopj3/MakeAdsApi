@@ -1,0 +1,10 @@
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Contracts/bin/Debug/netstandard2.1/MakeAdsApi.Contracts.deps.json
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Contracts/bin/Debug/netstandard2.1/MakeAdsApi.Contracts.dll
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Contracts/bin/Debug/netstandard2.1/MakeAdsApi.Contracts.pdb
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Contracts/obj/Debug/netstandard2.1/MakeAdsApi.Contracts.csproj.AssemblyReference.cache
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Contracts/obj/Debug/netstandard2.1/MakeAdsApi.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Contracts/obj/Debug/netstandard2.1/MakeAdsApi.Contracts.AssemblyInfoInputs.cache
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Contracts/obj/Debug/netstandard2.1/MakeAdsApi.Contracts.AssemblyInfo.cs
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Contracts/obj/Debug/netstandard2.1/MakeAdsApi.Contracts.csproj.CoreCompileInputs.cache
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Contracts/obj/Debug/netstandard2.1/MakeAdsApi.Contracts.dll
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Contracts/obj/Debug/netstandard2.1/MakeAdsApi.Contracts.pdb

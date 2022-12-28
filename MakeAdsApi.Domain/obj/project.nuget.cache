@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "KxQjyFloBQWgElci1Xt8sQmtsWZx65ygejkRmICBdCQQ0eRsAG2IEglBNXzrzxzkqf8r8ymvVLL6Nom7rP5lGA==",
+  "success": true,
+  "projectFilePath": "/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Domain/MakeAdsApi.Domain.csproj",
+  "expectedPackageFiles": [
+    "/Users/illiashevchenko/.nuget/packages/ardalis.smartenum/2.1.0/ardalis.smartenum.2.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}

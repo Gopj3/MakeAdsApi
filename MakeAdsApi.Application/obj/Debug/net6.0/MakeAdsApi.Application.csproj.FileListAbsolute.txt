@@ -1,0 +1,12 @@
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Application/bin/Debug/net6.0/MakeAdsApi.Application.deps.json
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Application/bin/Debug/net6.0/MakeAdsApi.Application.dll
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Application/bin/Debug/net6.0/MakeAdsApi.Application.pdb
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Application/obj/Debug/net6.0/MakeAdsApi.Application.csproj.AssemblyReference.cache
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Application/obj/Debug/net6.0/MakeAdsApi.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Application/obj/Debug/net6.0/MakeAdsApi.Application.AssemblyInfoInputs.cache
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Application/obj/Debug/net6.0/MakeAdsApi.Application.AssemblyInfo.cs
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Application/obj/Debug/net6.0/MakeAdsApi.Application.csproj.CoreCompileInputs.cache
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Application/obj/Debug/net6.0/MakeAdsApi.Application.dll
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Application/obj/Debug/net6.0/refint/MakeAdsApi.Application.dll
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Application/obj/Debug/net6.0/MakeAdsApi.Application.pdb
+/Users/illiashevchenko/RiderProjects/MakeAdsApi/MakeAdsApi.Application/obj/Debug/net6.0/ref/MakeAdsApi.Application.dll

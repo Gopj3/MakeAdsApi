@@ -5,6 +5,7 @@ using ErrorOr;
 using MakeAdsApi.Application.Authentication.Models;
 using MakeAdsApi.Application.Common.Interfaces.Authentication;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace MakeAdsApi.Application.Authentication.Queries;
 

@@ -13,4 +13,8 @@
       <PackageReference Include="Ardalis.SmartEnum" Version="2.1.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove=".gitignore" />
+    </ItemGroup>
+
 </Project>

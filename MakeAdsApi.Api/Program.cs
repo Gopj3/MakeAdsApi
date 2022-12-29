@@ -1,3 +1,5 @@
+using MakeAdsApi.Api;
+using MakeAdsApi.Api.Middlewares;
 using MakeAdsApi.Application;
 using MakeAdsApi.Infrastructure;
 using Microsoft.AspNetCore.Builder;
@@ -14,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddRouting(options => options.LowercaseUrls = true);
     
     builder.Services
+        .AddApi()
         .AddApplication()
         .AddInfrastructure(builder.Configuration);
     
@@ -29,7 +32,7 @@ if (app.Environment.IsDevelopment())
 }
 
 {
-    app.UseExceptionHandler("/error");
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
     app.UseHttpsRedirection();
     app.UseRouting();
     app.UseAuthentication();

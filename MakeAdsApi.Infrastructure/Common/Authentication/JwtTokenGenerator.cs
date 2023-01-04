@@ -4,7 +4,7 @@ using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using MakeAdsApi.Application.Common.Interfaces.Authentication;
+using MakeAdsApi.Application.Common.Abstractions.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 

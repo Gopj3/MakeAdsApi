@@ -28,4 +28,8 @@
       <ProjectReference Include="..\MakeAdsApi.Domain\MakeAdsApi.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Migrations" />
+    </ItemGroup>
+
 </Project>

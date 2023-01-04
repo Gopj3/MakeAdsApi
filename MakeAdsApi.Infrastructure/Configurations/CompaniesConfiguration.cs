@@ -35,10 +35,17 @@ public static class CompaniesConfiguration
                 p => p.Split(',', StringSplitOptions.None)
                     .ToList().Select(sp => AvailableSocialMedias.FromValue(sp)).ToList(),
                 new ValueComparer<List<AvailableSocialMedias>>(
-                    (a,b) => a.SequenceEqual(b),
+                    (a, b) => a.SequenceEqual(b),
                     c => c.Aggregate(
                         0, (a, v) => HashCode.Combine(a, v.Value.GetHashCode())
                     ),
                     c => c.ToList()));
+        
+        modelBuilder.Entity<CompanyAutoCreationConfig>()
+            .Property(x => x.Type)
+            .HasConversion(
+                x => x.Value,
+                x => AutoCreationConfigType.FromValue(x)
+            );
     }
 }

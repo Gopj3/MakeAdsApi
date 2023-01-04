@@ -1,6 +1,6 @@
 using System;
 
-namespace MakeAdsApi.Application.Common.Interfaces.Authentication;
+namespace MakeAdsApi.Application.Common.Abstractions.Authentication;
 
 public interface IJwtTokenGenerator
 {

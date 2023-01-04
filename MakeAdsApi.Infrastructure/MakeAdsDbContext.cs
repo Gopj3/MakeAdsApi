@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MakeAdsApi.Domain.Entities;
 using MakeAdsApi.Domain.Entities.Companies;
+using MakeAdsApi.Domain.Entities.MediaLibrary;
 using MakeAdsApi.Domain.Entities.Offices;
 using MakeAdsApi.Domain.Entities.Users;
 using MakeAdsApi.Domain.Entities.RetailDataProviders;
@@ -31,6 +32,8 @@ public class MakeAdsDbContext : DbContext
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<UserProfile> UserProfiles { get; set; }
+    public DbSet<MediaLibraryImage> MediaLibraryImages { get; set; }
+    public DbSet<MediaLibraryVideo> MediaLibraryVideos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,6 +42,7 @@ public class MakeAdsDbContext : DbContext
         modelBuilder.ConfigureOffice();
         modelBuilder.ConfigureUserRoles();
         modelBuilder.ConfigureMediaConfigs();
+        modelBuilder.ConfigureMediaLibrary();
 
         base.OnModelCreating(modelBuilder);
     }

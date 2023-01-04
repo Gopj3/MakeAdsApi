@@ -25,4 +25,12 @@
       </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Abstractions\Repositories" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MakeAdsApi.Domain\MakeAdsApi.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

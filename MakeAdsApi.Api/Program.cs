@@ -2,11 +2,7 @@ using MakeAdsApi.Api;
 using MakeAdsApi.Api.Middlewares;
 using MakeAdsApi.Application;
 using MakeAdsApi.Infrastructure;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -14,14 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddSwaggerGen();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddRouting(options => options.LowercaseUrls = true);
-    
-    builder.Services
-        .AddApi()
-        .AddApplication()
-        .AddInfrastructure(builder.Configuration);
-    
-    builder.Services.AddDbContext<MakeAdsDbContext>(options => 
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")!));
+
+    builder.Services.AddApi();
+    builder.Services.AddApplication();
+    builder.Services.AddInfrastructure(builder.Configuration);
+
+    builder.Services.AddDbContext<MakeAdsDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("MakeAdsDb")!));
 }
 
 var app = builder.Build();
@@ -39,6 +34,6 @@ if (app.Environment.IsDevelopment())
     app.UseAuthorization();
     app.MapControllers();
     app.UseCors();
-    
+
     app.Run();
 }

@@ -232,9 +232,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OfficeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HasPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OfficeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -245,8 +245,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         name: "FK_Users_Offices_OfficeId",
                         column: x => x.OfficeId,
                         principalTable: "Offices",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -353,6 +352,11 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         principalTable: "BaseMediaLibraryFiles",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreatedAt", "Email", "OfficeId", "Password", "UpdatedAt" },
+                values: new object[] { new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin-nordic.com", null, "$2a$12$IUOkuRW8ou18F.9ub6YUYeOsVxAgbiCBjfo6ztjVGg03zZfgdr0X2", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BaseMediaLibraryFiles_UserId",

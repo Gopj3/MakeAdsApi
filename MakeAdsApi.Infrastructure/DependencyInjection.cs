@@ -1,5 +1,6 @@
 using MakeAdsApi.Application.Common.Abstractions.Authentication;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
+using MakeAdsApi.Domain.Entities.Users;
 using MakeAdsApi.Infrastructure.Common.Authentication;
 using MakeAdsApi.Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,7 @@ namespace MakeAdsApi.Infrastructure
             services.Configure<JwtSettings>(builderConfiguration.GetSection("JwtSettings"));
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
         }
     }
 }

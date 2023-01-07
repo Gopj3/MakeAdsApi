@@ -20,21 +20,15 @@ public class JwtTokenValidator : IJwtTokenValidator
     public Guid? ValidateToken(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
-
         try
         {
-            tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ClockSkew = TimeSpan.Zero
-                }, out var validatedToken);
-            
-            var jwtToken = (JwtSecurityToken) validatedToken;
-            
+            tokenHandler.ValidateToken(
+                token,
+                JwtValidationParameters.GetValidationParameters(_jwtSettings),
+                out var validatedToken
+            );
+            var jwtToken = (JwtSecurityToken)validatedToken;
+
             return Guid.Parse(jwtToken.Claims.First(x => x.Type == nameof(JwtRegisteredClaimNames.Sub)).Value);
         }
         catch

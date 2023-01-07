@@ -13,12 +13,12 @@ namespace MakeAdsApi.Infrastructure.Repositories;
 public class GenericRepository<T> : IGenericRepository<T> 
     where T: BaseEntity
 {
-    private readonly MakeAdsDbContext _context;
+    protected readonly MakeAdsDbContext Context;
     private readonly DbSet<T> _dbSet;
 
     public GenericRepository(MakeAdsDbContext context)
     {
-        _context = context;
+        Context = context;
         _dbSet = context.Set<T>();
     }
     
@@ -49,7 +49,7 @@ public class GenericRepository<T> : IGenericRepository<T>
     
     public void Delete(T entity)
     {
-        if (_context.Entry(entity).State == EntityState.Detached)
+        if (Context.Entry(entity).State == EntityState.Detached)
         {
             _dbSet.Attach(entity);
         }

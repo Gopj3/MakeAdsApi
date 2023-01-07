@@ -401,11 +401,11 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("HasPassword")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("OfficeId")
+                    b.Property<Guid?>("OfficeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Password")
@@ -420,6 +420,16 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.HasIndex("OfficeId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "admin@admin-nordic.com",
+                            Password = "$2a$12$IUOkuRW8ou18F.9ub6YUYeOsVxAgbiCBjfo6ztjVGg03zZfgdr0X2",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Users.UserProfile", b =>
@@ -589,9 +599,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 {
                     b.HasOne("MakeAdsApi.Domain.Entities.Offices.Office", "Office")
                         .WithMany("Users")
-                        .HasForeignKey("OfficeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OfficeId");
 
                     b.Navigation("Office");
                 });

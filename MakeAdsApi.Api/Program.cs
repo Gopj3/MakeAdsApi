@@ -1,4 +1,5 @@
 using MakeAdsApi.Api;
+using MakeAdsApi.Api.Configurations;
 using MakeAdsApi.Api.Middlewares;
 using MakeAdsApi.Application;
 using MakeAdsApi.Infrastructure;
@@ -14,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddApi();
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
+    builder.Services.ConfigureJwtBearer(builder.Configuration);
 
     builder.Services.AddDbContext<MakeAdsDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("MakeAdsDb")!));

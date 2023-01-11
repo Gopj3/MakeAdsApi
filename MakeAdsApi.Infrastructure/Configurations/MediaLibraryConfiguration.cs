@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MakeAdsApi.Infrastructure.Configurations;
 
-public static class MediaLibraryConfiguration
+internal static class MediaLibraryConfiguration
 {
     public static void ConfigureMediaLibrary(this ModelBuilder modelBuilder)
     {

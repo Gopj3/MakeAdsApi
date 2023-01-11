@@ -6,5 +6,5 @@ namespace MakeAdsApi.Application.Common.Abstractions.Repositories;
 
 public interface IUserRepository: IGenericRepository<User>
 {
-    Task<User?> FindByEmailAsync(string email, CancellationToken token = default);
+    Task<User?> FindByEmailWithRolesAsync(string email, CancellationToken token = default);
 }

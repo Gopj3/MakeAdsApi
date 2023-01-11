@@ -390,6 +390,22 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("59508398-5e83-4ef5-9774-24f8e6f0d4ec"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "Admin",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = new Guid("69508328-5e83-4ef5-9774-24f8e6f0d4ec"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "User",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Users.User", b =>
@@ -427,7 +443,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
                             Id = new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@admin-nordic.com",
-                            Password = "$2a$12$IUOkuRW8ou18F.9ub6YUYeOsVxAgbiCBjfo6ztjVGg03zZfgdr0X2",
+                            Password = "$2a$12$a1FnpItQRKcNDo1AuNDIM.5s.3cNsJpG6Rw3ou.w04V48YBwBRtnS",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -450,6 +466,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
@@ -494,6 +513,16 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("85231998-5e83-4ef5-9774-24f8e6f0d4ec"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleId = new Guid("59508398-5e83-4ef5-9774-24f8e6f0d4ec"),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec")
+                        });
                 });
 
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.MediaLibrary.MediaLibraryImage", b =>

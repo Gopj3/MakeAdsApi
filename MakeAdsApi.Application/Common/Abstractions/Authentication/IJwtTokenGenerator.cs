@@ -1,8 +1,9 @@
 using System;
+using MakeAdsApi.Domain.Entities.Users;
 
 namespace MakeAdsApi.Application.Common.Abstractions.Authentication;
 
 public interface IJwtTokenGenerator
 {
-    string GenerateToken(Guid userId, string email);
+    string GenerateToken(User user);
 }

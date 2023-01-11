@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using ErrorOr;
@@ -30,7 +29,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery request, CancellationToken cancellationToken)
     {
-        var user = await _unitOfWork.UserRepository.FindByEmailAsync(request.Email, cancellationToken);
+        var user = await _unitOfWork.UserRepository.FindByEmailWithRolesAsync(request.Email, cancellationToken);
 
         if (user is null)
             return DomainErrors.User.InvalidCredentials;
@@ -40,7 +39,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
         if (!isPasswordValid) 
             return DomainErrors.User.InvalidCredentials; 
         
-        string accessToken = _jwtTokenGenerator.GenerateToken(user.Id, user.Email);
+        string accessToken = _jwtTokenGenerator.GenerateToken(user);
 
         return new AuthenticationResult(user.Email, accessToken);
     }

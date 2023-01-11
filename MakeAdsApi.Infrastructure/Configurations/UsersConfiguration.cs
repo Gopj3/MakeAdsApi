@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MakeAdsApi.Domain.Entities.Users;
 using MakeAdsApi.Infrastructure.Common.Authentication;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,7 @@ public static class UsersConfiguration
             {
                 Id = Guid.Parse("49508398-5e83-4ef5-9774-24f8e6f0d4ec"),
                 Email = "admin@admin-nordic.com",
-                Password = (new PasswordHasher<User>()).HashPassword("nordicPass123"),
+                Password = (new PasswordHasher<User>()).HashPassword("nordicPass123")
             });
     }
 }

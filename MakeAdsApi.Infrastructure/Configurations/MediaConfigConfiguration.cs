@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MakeAdsApi.Infrastructure.Configurations;
 
-public static class MediaConfigConfiguration
+internal static class MediaConfigConfiguration
 {
     public static void ConfigureMediaConfigs(this ModelBuilder modelBuilder)
     {

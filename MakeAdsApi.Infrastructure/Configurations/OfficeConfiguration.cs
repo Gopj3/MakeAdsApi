@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MakeAdsApi.Infrastructure.Configurations;
 
-public static class OfficeConfiguration
+internal static class OfficeConfiguration
 {
     public static void ConfigureOffice(this ModelBuilder modelBuilder)
     {

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace MakeAdsApi.Infrastructure.Configurations;
 
-public static class CompaniesConfiguration
+internal static class CompaniesConfiguration
 {
     public static void ConfigureCompanies(this ModelBuilder modelBuilder)
     {

@@ -11,5 +11,5 @@ public class User: BaseEntity
     public UserProfile? Profile { get; set; }
     public Guid? OfficeId { get; set; }
     public Office? Office { get; set; }
-    public List<UserRole> UserRoles { get; } = new();
+    public List<UserRole> UserRoles { get; init; } = new();
 }

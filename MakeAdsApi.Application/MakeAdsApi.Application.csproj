@@ -27,6 +27,7 @@
 
     <ItemGroup>
       <Folder Include="Abstractions\Repositories" />
+      <Folder Include="Users\Commands" />
     </ItemGroup>
 
     <ItemGroup>

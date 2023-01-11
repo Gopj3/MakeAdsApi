@@ -37,6 +37,11 @@ public class GenericRepository<T> : IGenericRepository<T>
         return await _dbSet.ToListAsync(token);
     }
 
+    public virtual async Task<List<T>> GetEntitiesPaginated(int page, int pageSize, CancellationToken token)
+    {
+        return await _dbSet.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync(token);
+    }
+
     public async Task DeleteById(Guid id, CancellationToken token = default)
     {
         T? entity = await GetByIdAsync(id, token);

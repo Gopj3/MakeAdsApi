@@ -37,6 +37,7 @@ public class MakeAdsDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.ConfigureRole();
         modelBuilder.ConfigureUser();
         modelBuilder.ConfigureCompanies();
         modelBuilder.ConfigureOffice();

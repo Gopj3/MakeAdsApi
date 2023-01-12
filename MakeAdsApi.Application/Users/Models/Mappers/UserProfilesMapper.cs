@@ -8,16 +8,19 @@ public static class UserProfilesMapper
 {
     public static UserProfileDto ToDto(this UserProfile userProfile)
     {
-        return new(
-            Id: userProfile.Id,
-            FirstName: userProfile.FirstName,
-            LastName: userProfile.LastName,
-            Title: userProfile.Title,
-            Avatar: userProfile.Avatar,
-            Phone: userProfile.Phone
-        );
+        return new UserProfileDto
+        {
+            Id = userProfile.Id,
+            FirstName = userProfile.FirstName,
+            LastName = userProfile.LastName,
+            Title = userProfile.Title,
+            Avatar = userProfile.Avatar,
+            Phone = userProfile.Phone,
+            CreatedAt = userProfile.CreatedAt,
+            UpdatedAt = userProfile.UpdatedAt,
+        };
     }
-    
+
     public static UserProfile ToEntity(this UserProfileDto userProfileDto)
     {
         return new UserProfile
@@ -37,7 +40,7 @@ public static class UserProfilesMapper
 
         return dto;
     }
-    
+
     public static List<UserProfileDto> ToDtos(this List<UserProfile> userProfiles)
     {
         if (userProfiles.Any())
@@ -47,7 +50,7 @@ public static class UserProfilesMapper
 
         return new List<UserProfileDto>();
     }
-    
+
     public static List<UserProfile> ToEntities(this List<UserProfileDto> userProfilesDto)
     {
         if (userProfilesDto.Any())
@@ -57,7 +60,7 @@ public static class UserProfilesMapper
 
         return new List<UserProfile>();
     }
-    
+
     public static List<UserProfile> ToEntities(this List<UserProfileDto> userProfilesDto, User user)
     {
         if (userProfilesDto.Any())

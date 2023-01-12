@@ -8,11 +8,12 @@ public static class UsersMapper
 {
     public static UserDto ToDto(this User user)
     {
-        return new(
-            Id: user.Id,
-            Email: user.Email,
-            UserProfile: user.Profile?.ToDto()
-        );
+        return new UserDto
+        {
+            Id = user.Id,
+            Email = user.Email,
+            UserProfile = user.Profile?.ToDto()
+        };
     }
 
     public static User ToEntity(this UserDto userDto)

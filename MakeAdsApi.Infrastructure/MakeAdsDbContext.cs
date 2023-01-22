@@ -52,15 +52,14 @@ public class MakeAdsDbContext : DbContext
     {
         var entries = ChangeTracker
             .Entries()
-            .Where(e => e.Entity is BaseEntity && (
-                e.State == EntityState.Added
-                || e.State == EntityState.Modified));
+            .Where(e => e.Entity is BaseEntity)
+            .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
         foreach (var entityEntry in entries)
         {
             var entity = entityEntry.Entity as BaseEntity;
             if (entity == null) continue;
-            
+
             entity.UpdatedAt = DateTime.UtcNow;
 
             if (entityEntry.State == EntityState.Added)

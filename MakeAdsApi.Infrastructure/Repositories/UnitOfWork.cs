@@ -10,11 +10,13 @@ public sealed class UnitOfWork : IUnitOfWork
     private bool _disposed = false;
 
     public IUserRepository UserRepository { get; set; }
+    public IRoleRepository RoleRepository { get; set; }
 
     public UnitOfWork(MakeAdsDbContext context)
     {
         _context = context;
         UserRepository = new UserRepository(context);
+        RoleRepository = new RoleRepository(context);
     }
 
     public async Task SaveChangesAsync()

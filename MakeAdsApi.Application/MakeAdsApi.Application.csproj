@@ -7,12 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="AWSSDK.Core" Version="3.7.103.17" />
+      <PackageReference Include="AWSSDK.S3" Version="3.7.101.55" />
       <PackageReference Include="ErrorOr" Version="1.2.1" />
       <PackageReference Include="FluentValidation" Version="11.4.0" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.4.0" />
       <PackageReference Include="MediatR" Version="11.1.0" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.12" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -23,15 +27,17 @@
       <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
         <HintPath>..\..\..\..\..\usr\local\share\dotnet\x64\shared\Microsoft.AspNetCore.App\6.0.12\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
       </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Abstractions\Repositories" />
-      <Folder Include="Users\Commands" />
+      <Reference Include="Microsoft.AspNetCore.Http.Features">
+        <HintPath>..\..\..\..\..\usr\local\share\dotnet\x64\shared\Microsoft.AspNetCore.App\6.0.12\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\MakeAdsApi.Domain\MakeAdsApi.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Roles\Commands" />
     </ItemGroup>
 
 </Project>

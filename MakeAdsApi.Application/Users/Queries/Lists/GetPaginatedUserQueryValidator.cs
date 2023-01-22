@@ -6,7 +6,7 @@ public class GetPaginatedUserQueryValidator: AbstractValidator<GetPaginatedUserQ
 {
     public GetPaginatedUserQueryValidator()
     {
-        RuleFor(x => x.Page).GreaterThan(0);
-        RuleFor(x => x.PageSize).GreaterThan(0);
+        RuleFor(x => x.Page).NotNull();
+        RuleFor(x => x.PageSize).NotNull().GreaterThan(0);
     }
 }

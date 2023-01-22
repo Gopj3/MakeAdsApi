@@ -1,8 +1,9 @@
 using System.Collections.Generic;
-using MakeAdsApi.Application.Users.Models;
 using MediatR;
 using ErrorOr;
+using MakeAdsApi.Application.Common.ViewModels;
+using MakeAdsApi.Application.Users.Models.Responses;
 
 namespace MakeAdsApi.Application.Users.Queries.Lists;
 
-public record GetPaginatedUserQuery(int Page, int PageSize) : IRequest<ErrorOr<List<UserDto>>>;
+public record GetPaginatedUserQuery(int Page, int PageSize) : IRequest<ErrorOr<BaseViewListModel<UserViewModel>>>;

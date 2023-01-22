@@ -1,29 +1,39 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using ErrorOr;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
-using MakeAdsApi.Application.Users.Models;
-using MakeAdsApi.Application.Users.Models.Mappers;
+using MakeAdsApi.Application.Common.ViewModels;
+using MakeAdsApi.Application.Users.Models.Responses;
 
 namespace MakeAdsApi.Application.Users.Queries.Lists;
 
-public class GetPaginatedUserQueryHandler: IRequestHandler<GetPaginatedUserQuery, ErrorOr<List<UserDto>>>
+public class
+    GetPaginatedUserQueryHandler : IRequestHandler<GetPaginatedUserQuery, ErrorOr<BaseViewListModel<UserViewModel>>>
 {
     private IUnitOfWork _unitOfWork;
-    
+
     public GetPaginatedUserQueryHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
-    
-    public async Task<ErrorOr<List<UserDto>>> Handle(GetPaginatedUserQuery request, CancellationToken cancellationToken)
+
+    public async Task<ErrorOr<BaseViewListModel<UserViewModel>>> Handle(GetPaginatedUserQuery request,
+        CancellationToken cancellationToken)
     {
         var users = await _unitOfWork
             .UserRepository
-            .GetEntitiesPaginated(request.Page, request.PageSize, cancellationToken);
+            .GetEntitiesPaginatedAsync(request.Page, request.PageSize, cancellationToken);
 
-        return users.ToDtos();
+        return new BaseViewListModel<UserViewModel>(
+            users.Select(UserViewModel.From),
+            users.TotalCount,
+            users.CurrentPage,
+            users.PageSize,
+            users.HasNext,
+            users.HasPrevious
+        );
     }
 }

@@ -29,7 +29,9 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery request, CancellationToken cancellationToken)
     {
-        var user = await _unitOfWork.UserRepository.FindByEmailWithRolesAsync(request.Email, cancellationToken);
+        var user = await _unitOfWork
+            .UserRepository.
+            GetByExpressionWithRolesAsync(x => x.Email == request.Email, cancellationToken);
 
         if (user is null)
             return DomainErrors.User.InvalidCredentials;

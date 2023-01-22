@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
 using MakeAdsApi.Application.Common.Abstractions.Specifications;
+using MakeAdsApi.Application.Common.ViewModels;
 using MakeAdsApi.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +24,7 @@ public class GenericRepository<T> : IGenericRepository<T>
         _dbSet = context.Set<T>();
     }
     
-    public async Task Create(T entity, CancellationToken token = default)
+    public async Task CreateAsync(T entity, CancellationToken token = default)
     {
         await _dbSet.AddAsync(entity, token);
     }
@@ -37,9 +39,19 @@ public class GenericRepository<T> : IGenericRepository<T>
         return await _dbSet.ToListAsync(token);
     }
 
-    public virtual async Task<List<T>> GetEntitiesPaginated(int page, int pageSize, CancellationToken token)
+    public virtual async Task<PagedList<T>> GetEntitiesPaginatedAsync(int page, int pageSize, CancellationToken token = default)
     {
-        return await _dbSet.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync(token);
+        return await PagedList<T>.ToPagedList(_dbSet.AsQueryable(), page, pageSize);
+    }
+
+    public async Task<List<T>> GetByExpressionAsync(Expression<Func<T, bool>> filter, CancellationToken token = default)
+    {
+       return await _dbSet.Where(filter).ToListAsync(token);
+    }
+    
+    public async Task<T?> GetByExpressionFirstAsync(Expression<Func<T, bool>> filter, CancellationToken token = default)
+    {
+        return await _dbSet.Where(filter).FirstOrDefaultAsync(token);
     }
 
     public async Task DeleteById(Guid id, CancellationToken token = default)
@@ -50,6 +62,12 @@ public class GenericRepository<T> : IGenericRepository<T>
         {
             Delete(entity);
         }
+    }
+
+    public void Update(T entity)
+    {
+        Context.Entry(entity).State = EntityState.Modified;
+        _dbSet.Update(entity);
     }
     
     public void Delete(T entity)

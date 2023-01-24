@@ -10,4 +10,9 @@ public static class DomainErrors
         public static Error DuplicateEmail = Error.Conflict("User.DuplicateEmail", "User with given email already exists.");
         public static Error InvalidCredentials = Error.NotFound( "User.InvalidCredentials", "Invalid credentials");
     }
+    
+    public static class UserProfile
+    {
+        public static Error NotFound = Error.NotFound("UserProfile.NotFound", "User profile not found.");
+    }
 }

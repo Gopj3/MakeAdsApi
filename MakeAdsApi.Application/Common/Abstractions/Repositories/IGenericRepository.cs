@@ -20,4 +20,5 @@ public interface IGenericRepository<T> where T: class
     void Delete(T entity);
     void Update(T entity);
     Task<List<T>> GetBySpecification(ISpecification<T> specification = null);
+    Task<int> CountAsync(CancellationToken token = default);
 }

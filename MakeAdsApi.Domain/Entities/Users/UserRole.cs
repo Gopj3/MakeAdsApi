@@ -15,11 +15,7 @@ public class UserRole: BaseEntity
     {
         if (roles.Any())
         {
-            return roles.Select(el => new UserRole
-            {
-                UserId = userId,
-                RoleId = el.Id
-            }).ToList();
+            return roles.Select(x => Create(userId, x)).ToList();
         }
 
         return null;

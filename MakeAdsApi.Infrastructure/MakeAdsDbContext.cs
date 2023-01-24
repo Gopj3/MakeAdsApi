@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MakeAdsApi.Domain.Entities;
 using MakeAdsApi.Domain.Entities.Companies;
-using MakeAdsApi.Domain.Entities.MediaLibrary;
+using MakeAdsApi.Domain.Entities.Files.MediaLibrary;
 using MakeAdsApi.Domain.Entities.Offices;
 using MakeAdsApi.Domain.Entities.Users;
 using MakeAdsApi.Domain.Entities.RetailDataProviders;

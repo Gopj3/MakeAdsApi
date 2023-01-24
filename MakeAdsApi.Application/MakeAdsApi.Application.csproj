@@ -38,6 +38,8 @@
 
     <ItemGroup>
       <Folder Include="Roles\Commands" />
+      <Folder Include="Statistics\Admin\Commands" />
+      <Folder Include="Users\Queries\Admin" />
     </ItemGroup>
 
 </Project>

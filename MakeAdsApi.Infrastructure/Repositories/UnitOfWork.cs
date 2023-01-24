@@ -7,16 +7,18 @@ namespace MakeAdsApi.Infrastructure.Repositories;
 public sealed class UnitOfWork : IUnitOfWork
 {
     private readonly MakeAdsDbContext _context;
-    private bool _disposed = false;
+    private bool _disposed;
 
     public IUserRepository UserRepository { get; set; }
     public IRoleRepository RoleRepository { get; set; }
+    public IUserProfileRepository UserProfileRepository { get; set; }
 
     public UnitOfWork(MakeAdsDbContext context)
     {
         _context = context;
         UserRepository = new UserRepository(context);
         RoleRepository = new RoleRepository(context);
+        UserProfileRepository = new UserProfileRepository(context);
     }
 
     public async Task SaveChangesAsync()

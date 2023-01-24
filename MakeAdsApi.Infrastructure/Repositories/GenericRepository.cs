@@ -29,7 +29,7 @@ public class GenericRepository<T> : IGenericRepository<T>
         await _dbSet.AddAsync(entity, token);
     }
 
-    public async Task<T?> GetByIdAsync(Guid id, CancellationToken token = default)
+    public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken token = default)
     {
         return await _dbSet.Where(x => x.Id == id).FirstOrDefaultAsync(token);
     }
@@ -49,9 +49,14 @@ public class GenericRepository<T> : IGenericRepository<T>
        return await _dbSet.Where(filter).ToListAsync(token);
     }
     
-    public async Task<T?> GetByExpressionFirstAsync(Expression<Func<T, bool>> filter, CancellationToken token = default)
+    public virtual async Task<T?> GetByExpressionFirstAsync(Expression<Func<T, bool>> filter, CancellationToken token = default)
     {
         return await _dbSet.Where(filter).FirstOrDefaultAsync(token);
+    }
+    
+    public async Task<int> CountAsync(CancellationToken token = default)
+    {
+        return await _dbSet.CountAsync();
     }
 
     public async Task DeleteById(Guid id, CancellationToken token = default)

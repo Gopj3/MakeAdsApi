@@ -39,22 +39,7 @@ public class AwsS3Service : IAwsS3Service
         );
     }
 
-    public async Task<string?> WriteObjectWithPreSignedUrlAsync(
-        IFormFile file,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var url = GetPreSignedUrlAsync(file.FileName, HttpVerb.PUT);
-        var success = UploadObject(file, url);
-        if (success)
-        {
-            return url;
-        }
-
-        return null;
-    }
-
-    public async Task WriteObjectAsync(IFormFile formFile, CancellationToken cancellationToken = default)
+    public async Task<bool> WriteObjectAsync(IFormFile formFile, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -66,6 +51,8 @@ public class AwsS3Service : IAwsS3Service
             };
 
             await _s3Client.PutObjectAsync(request, cancellationToken);
+
+            return true;
         }
         catch (AmazonS3Exception e)
         {
@@ -75,9 +62,11 @@ public class AwsS3Service : IAwsS3Service
         {
             _logger.LogError(e, UNHANDLED_EXCEPTION, e.Message);
         }
+
+        return false;
     }
 
-    public string GetPreSignedUrlAsync(string fileName, HttpVerb? httpVerb = null)
+    public string GetPreSignedUrl(string fileName)
     {
         string url = String.Empty;
         try
@@ -88,11 +77,6 @@ public class AwsS3Service : IAwsS3Service
                 Key = fileName,
                 Expires = DateTime.UtcNow.AddDays(7)
             };
-
-            if (httpVerb != null)
-            {
-                request.Verb = httpVerb.Value;
-            }
 
             url = _s3Client.GetPreSignedURL(request);
         }
@@ -108,7 +92,7 @@ public class AwsS3Service : IAwsS3Service
         return url;
     }
 
-    public string GetPreSignedBasedOnUnPreSignedUrlAsync(string url)
+    public string GetPreSignedBasedOnUnPreSignedUrl(string url)
     {
         string fileName = String.Empty;
 
@@ -119,7 +103,7 @@ public class AwsS3Service : IAwsS3Service
             fileName = sb.ToString();
         }
 
-        return GetPreSignedUrlAsync(fileName);
+        return GetPreSignedUrl(fileName);
     }
 
     public async Task DeleteFileByFileNameAsync(string fileName)
@@ -142,40 +126,5 @@ public class AwsS3Service : IAwsS3Service
         {
             _logger.LogError(e, UNHANDLED_EXCEPTION, e.Message);
         }
-    }
-
-    private bool UploadObject(IFormFile file, string url)
-    {
-        try
-        {
-            HttpWebRequest httpRequest = WebRequest.Create(url) as HttpWebRequest;
-            if (httpRequest != null)
-            {
-                httpRequest.Method = WebRequestMethods.Http.Put;
-                using (Stream dataStream = httpRequest.GetRequestStream())
-                {
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        file.CopyTo(ms);
-                        var bytes = ms.ToArray();
-                        dataStream.Write(bytes, 0, bytes.Length);
-                    }
-                }
-
-                HttpWebResponse? response = httpRequest.GetResponse() as HttpWebResponse;
-
-                return response?.StatusCode == HttpStatusCode.OK;
-            }
-        }
-        catch (AmazonS3Exception e)
-        {
-            _logger.LogError(e, S3_ERROR, e.Message);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, UNHANDLED_EXCEPTION, e.Message);
-        }
-        
-        return false;
     }
 }

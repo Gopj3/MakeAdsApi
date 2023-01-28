@@ -1,10 +1,12 @@
-using MakeAdsApi.Application.Common.Abstractions.Services.AWS;
-using MakeAdsApi.Infrastructure.Services.AWS;
-
 namespace MakeAdsApi.Infrastructure;
 
-using Amazon.Extensions.NETCore.Setup;
-using Amazon.Runtime;
+using System.Threading;
+using Hangfire;
+using MakeAdsApi.Application.Common.Abstractions.Services.AWS;
+using Jobs;
+using Jobs.Abstractions;
+using Services.AWS;
+
 using MakeAdsApi.Application.Common.Abstractions.Authentication;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
 using Domain.Entities.Users;
@@ -25,5 +27,8 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
         services.AddSingleton<IAwsS3Service, AwsS3Service>();
+        services.AddScoped<IUpdatePreSignedUrlsService, UpdatePreSignedUrlsService>();
+        services.AddHangfire(x => { x.UseSqlServerStorage(builderConfiguration.GetConnectionString("HangFireDb")); });
+        services.AddHangfireServer();
     }
 }

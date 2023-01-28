@@ -1,4 +1,5 @@
 using System;
+using MakeAdsApi.Domain.Entities;
 
 namespace MakeAdsApi.Application.Common.ViewModels;
 

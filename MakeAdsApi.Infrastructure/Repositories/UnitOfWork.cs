@@ -12,13 +12,17 @@ public sealed class UnitOfWork : IUnitOfWork
     public IUserRepository UserRepository { get; set; }
     public IRoleRepository RoleRepository { get; set; }
     public IUserProfileRepository UserProfileRepository { get; set; }
-
+    public IUserProfileAvatarRepository UserProfileAvatarRepository { get; set; }
+    
+    public IRetailDataProviderRepository RetailDataProviderRepository { get; set; }
     public UnitOfWork(MakeAdsDbContext context)
     {
         _context = context;
         UserRepository = new UserRepository(context);
         RoleRepository = new RoleRepository(context);
         UserProfileRepository = new UserProfileRepository(context);
+        UserProfileAvatarRepository = new UserProfileAvatarRepository(context);
+        RetailDataProviderRepository = new RetailDataProviderRepository(context);
     }
 
     public async Task SaveChangesAsync()

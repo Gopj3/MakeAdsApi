@@ -1,8 +1,10 @@
+using Hangfire;
 using MakeAdsApi.Api;
 using MakeAdsApi.Api.Configurations;
 using MakeAdsApi.Api.Middlewares;
 using MakeAdsApi.Application;
 using MakeAdsApi.Infrastructure;
+using MakeAdsApi.Infrastructure.Jobs.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,6 +46,10 @@ if (app.Environment.IsDevelopment())
     app.UseAuthorization();
     app.MapControllers();
     app.UseCors();
-
+    app.UseHangfireDashboard();
+    
+    RecurringJob.AddOrUpdate<IUpdatePreSignedUrlsService>(
+        x => x.UpdatePreSignedUrlsAsync(CancellationToken.None
+        ), Cron.Daily);
     app.Run();
 }

@@ -18,7 +18,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     BrandingLogo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -33,6 +34,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     ClientId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -50,7 +52,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     PreSignedUrl = table.Column<string>(type: "varchar(768)", nullable: true),
                     PreSignedUrlCreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,6 +70,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     FacebookBusinessPageId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -79,12 +83,14 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FetchPropertyDataUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatePropertyDataUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FetchUserDataUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdateUserDataUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -98,7 +104,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -115,6 +122,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     ClientSecret = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -131,7 +139,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     TemplateId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DeltaMediaConfigId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -154,7 +163,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     RetailDataProviderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BrandingId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -186,7 +196,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -212,7 +223,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     BrandingId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -253,7 +265,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OfficeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -300,7 +313,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -321,7 +335,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -399,23 +414,23 @@ namespace MakeAdsApi.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Roles",
-                columns: new[] { "Id", "CreatedAt", "Title", "UpdatedAt" },
-                values: new object[] { new Guid("59508398-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Admin", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+                columns: new[] { "Id", "CreatedAt", "DeletedAt", "Title", "UpdatedAt" },
+                values: new object[] { new Guid("59508398-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Admin", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "Roles",
-                columns: new[] { "Id", "CreatedAt", "Title", "UpdatedAt" },
-                values: new object[] { new Guid("69508328-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "User", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+                columns: new[] { "Id", "CreatedAt", "DeletedAt", "Title", "UpdatedAt" },
+                values: new object[] { new Guid("69508328-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "User", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "CreatedAt", "Email", "OfficeId", "Password", "UpdatedAt" },
-                values: new object[] { new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(2023, 1, 24, 22, 14, 58, 735, DateTimeKind.Utc).AddTicks(9400), "admin@admin-nordic.com", null, "$2a$12$InxhymS18j1LeTYnmqhWZ./z9xKZWR8N6rK4mbVn0Gt64aA/juY/G", new DateTime(2023, 1, 24, 22, 14, 58, 735, DateTimeKind.Utc).AddTicks(9480) });
+                columns: new[] { "Id", "CreatedAt", "DeletedAt", "Email", "OfficeId", "Password", "UpdatedAt" },
+                values: new object[] { new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(2023, 1, 27, 19, 48, 6, 565, DateTimeKind.Utc).AddTicks(7800), null, "admin@admin-nordic.com", null, "$2a$12$8VrKCJw.cKPdxfJVSdIjkeMnvwLJZ2SPXeomQ7SE2KxJjJvBv4lNy", new DateTime(2023, 1, 27, 19, 48, 6, 565, DateTimeKind.Utc).AddTicks(7880) });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
-                columns: new[] { "Id", "CreatedAt", "RoleId", "UpdatedAt", "UserId" },
-                values: new object[] { new Guid("85231998-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("59508398-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec") });
+                columns: new[] { "Id", "CreatedAt", "DeletedAt", "RoleId", "UpdatedAt", "UserId" },
+                values: new object[] { new Guid("85231998-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new Guid("59508398-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BaseMediaLibraryFiles_UserId",

@@ -15,4 +15,9 @@ public static class DomainErrors
     {
         public static Error NotFound = Error.NotFound("UserProfile.NotFound", "User profile not found.");
     }
+
+    public static class RetailDataProvider
+    {
+        public static Error NotFound = Error.NotFound("RetailDataProvider.NotFound", "Retail data provider not found.");
+    }
 }

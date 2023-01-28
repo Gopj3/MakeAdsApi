@@ -39,6 +39,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -61,6 +64,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ExternalId")
@@ -120,6 +126,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("RadiusInKm")
                         .HasColumnType("int");
 
@@ -144,6 +153,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FileExtension")
@@ -181,6 +193,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("DeltaMediaConfigId")
@@ -235,10 +250,17 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("FetchPropertyDataUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FetchUserDataUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatePropertyDataUrl")
@@ -268,6 +290,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -287,6 +312,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("DeltaMediaConfigId")
@@ -321,6 +349,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FacebookBusinessPageId")
@@ -364,6 +395,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -383,6 +417,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
@@ -422,6 +459,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -446,10 +486,10 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"),
-                            CreatedAt = new DateTime(2023, 1, 24, 22, 14, 58, 735, DateTimeKind.Utc).AddTicks(9400),
+                            CreatedAt = new DateTime(2023, 1, 27, 19, 48, 6, 565, DateTimeKind.Utc).AddTicks(7800),
                             Email = "admin@admin-nordic.com",
-                            Password = "$2a$12$InxhymS18j1LeTYnmqhWZ./z9xKZWR8N6rK4mbVn0Gt64aA/juY/G",
-                            UpdatedAt = new DateTime(2023, 1, 24, 22, 14, 58, 735, DateTimeKind.Utc).AddTicks(9480)
+                            Password = "$2a$12$8VrKCJw.cKPdxfJVSdIjkeMnvwLJZ2SPXeomQ7SE2KxJjJvBv4lNy",
+                            UpdatedAt = new DateTime(2023, 1, 27, 19, 48, 6, 565, DateTimeKind.Utc).AddTicks(7880)
                         });
                 });
 
@@ -460,6 +500,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
@@ -497,6 +540,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("RoleId")

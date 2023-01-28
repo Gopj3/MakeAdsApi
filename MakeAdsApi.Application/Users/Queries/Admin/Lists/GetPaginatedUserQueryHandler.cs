@@ -9,8 +9,8 @@ using MediatR;
 
 namespace MakeAdsApi.Application.Users.Queries.Admin.Lists;
 
-public class
-    GetPaginatedUserQueryHandler : IRequestHandler<GetPaginatedUserQuery, ErrorOr<BaseViewListModel<UserViewModel>>>
+public class GetPaginatedUserQueryHandler 
+    : IRequestHandler<GetPaginatedUserQuery, ErrorOr<BaseViewListModel<UserViewModel>>>
 {
     private IUnitOfWork _unitOfWork;
 
@@ -24,15 +24,15 @@ public class
     {
         var users = await _unitOfWork
             .UserRepository
-            .GetEntitiesPaginatedAsync(request.Page, request.PageSize, cancellationToken);
+            .GetPaginatedWithSearchAsync(request.Page, request.PageSize, request.Search, cancellationToken);
 
-        return new BaseViewListModel<UserViewModel>(
-            users.Select(UserViewModel.From),
-            users.TotalCount,
-            users.CurrentPage,
-            users.PageSize,
-            users.HasNext,
-            users.HasPrevious
-        );
+        return new BaseViewListModel<UserViewModel>{
+            Items = users.Select(UserViewModel.From),
+            TotalCount = users.TotalCount,
+            Page = users.CurrentPage,
+            PageSize = users.PageSize,
+            HasNextPage = users.HasNext,
+            HasPreviousPage = users.HasPrevious
+        };
     }
 }

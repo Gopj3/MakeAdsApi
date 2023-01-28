@@ -15,6 +15,7 @@ public class UserProfileViewModel: BaseViewModel
     {
         return new UserProfileViewModel
         {
+            Id = userProfile.Id,
             FirstName = userProfile.FirstName,
             LastName = userProfile.LastName,
             Title = userProfile.Title,

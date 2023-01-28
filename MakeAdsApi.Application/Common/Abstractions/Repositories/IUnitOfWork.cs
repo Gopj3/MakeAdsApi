@@ -8,5 +8,8 @@ public interface IUnitOfWork: IDisposable
     IUserRepository UserRepository { get; set; }
     IRoleRepository RoleRepository { get; set; }
     IUserProfileRepository UserProfileRepository { get; set; }
+    IUserProfileAvatarRepository UserProfileAvatarRepository { get; set; }
+    IRetailDataProviderRepository RetailDataProviderRepository { get; set; }
+    
     Task SaveChangesAsync();
 }

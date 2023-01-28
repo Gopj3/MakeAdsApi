@@ -5,4 +5,4 @@ using MediatR;
 
 namespace MakeAdsApi.Application.Users.Queries.Admin.Lists;
 
-public record GetPaginatedUserQuery(int Page, int PageSize) : IRequest<ErrorOr<BaseViewListModel<UserViewModel>>>;
+public record GetPaginatedUserQuery(int Page, int PageSize, string? Search) : IRequest<ErrorOr<BaseViewListModel<UserViewModel>>>;

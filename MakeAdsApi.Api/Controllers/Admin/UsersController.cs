@@ -39,10 +39,11 @@ public class UsersController : AdminApiController
     public async Task<IActionResult> GetUsersListPaginatedAsync(
         [FromQuery(Name = "page")] int page = 1,
         [FromQuery(Name = "pageSize")] int pageSize = 10,
+        [FromQuery(Name = "search")] string? search = null,
         CancellationToken token = default
     )
     {
-        var query = new GetPaginatedUserQuery(page, pageSize);
+        var query = new GetPaginatedUserQuery(page, pageSize, search);
         ErrorOr<BaseViewListModel<UserViewModel>> users = await _mediator.Send(query, token);
 
         return users.Match(

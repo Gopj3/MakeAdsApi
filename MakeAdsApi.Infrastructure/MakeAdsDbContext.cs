@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using MakeAdsApi.Domain.Entities.Budgets;
 using MakeAdsApi.Domain.Entities.Companies;
 using MakeAdsApi.Domain.Entities.Files;
 using MakeAdsApi.Domain.Entities.Files.MediaLibrary;
@@ -35,6 +36,8 @@ public class MakeAdsDbContext : DbContext
     public DbSet<MediaLibraryImage> MediaLibraryImages { get; set; }
     public DbSet<MediaLibraryVideo> MediaLibraryVideos { get; set; }
     public DbSet<UserProfileAvatar> UserProfileAvatars { get; set; }
+    public DbSet<Budget> Budgets { get; set; }
+    public DbSet<BudgetItem> BudgetItems { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

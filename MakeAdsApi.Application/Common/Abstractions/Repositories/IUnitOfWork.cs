@@ -14,6 +14,7 @@ public interface IUnitOfWork: IDisposable
     IFileRepository FileRepository { get; set; }
     ICompanyRepository CompanyRepository { get; set; }
     IOfficeRepository OfficeRepository { get; set; }
-    
+    IBudgetRepository BudgetRepository { get; set; }
+    IBudgetItemRepository BudgetItemRepository { get; set; }
     Task SaveChangesAsync(CancellationToken cancellationToken = default);
 }

@@ -10,4 +10,16 @@ public class Budget: BaseEntity
     public List<BudgetItem> BudgetItems { get; set; } = new();
     public Guid CompanyId { get; set; }
     public Company Company { get; set; }
+
+    public Budget(string title, Guid companyId)
+    {
+        Title = title;
+        CompanyId = companyId;
+    }
+
+    public void Update(string title, Guid companyId)
+    {
+        Title = title;
+        CompanyId = companyId;
+    }
 }

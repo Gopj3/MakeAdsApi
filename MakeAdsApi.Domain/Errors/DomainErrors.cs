@@ -39,4 +39,14 @@ public static class DomainErrors
         public static Error DuplicateCompanyExternalId =
             Error.Conflict("Office.DuplicateCompanyExternalId", "Office with given external id exists");
     }
+    
+    public static class Budget
+    {
+        public static Error NotFound = Error.NotFound("Budget.NotFound", "Budget not found.");
+    }
+    
+    public static class BudgetItem
+    {
+        public static Error NotFound = Error.NotFound("Budget item.NotFound", "Budget item not found.");
+    }
 }

@@ -18,6 +18,8 @@ public sealed class UnitOfWork : IUnitOfWork
     public IFileRepository FileRepository { get; set; }
     public ICompanyRepository CompanyRepository { get; set; }
     public IOfficeRepository OfficeRepository { get; set; }
+    public IBudgetRepository BudgetRepository { get; set; }
+    public IBudgetItemRepository BudgetItemRepository { get; set; }
 
     public UnitOfWork(MakeAdsDbContext context)
     {
@@ -30,6 +32,8 @@ public sealed class UnitOfWork : IUnitOfWork
         FileRepository = new FileRepository(context);
         CompanyRepository = new CompanyRepository(context);
         OfficeRepository = new OfficeRepository(context);
+        BudgetRepository = new BudgetRepository(context);
+        BudgetItemRepository = new BudgetItemRepository(context);
     }
 
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)

@@ -31,7 +31,7 @@ public class MakeAdsDbContext : DbContext
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<UserProfile> UserProfiles { get; set; }
-    
+    public DbSet<File> Files { get; set; }
     public DbSet<MediaLibraryImage> MediaLibraryImages { get; set; }
     public DbSet<MediaLibraryVideo> MediaLibraryVideos { get; set; }
     public DbSet<UserProfileAvatar> UserProfileAvatars { get; set; }
@@ -41,10 +41,14 @@ public class MakeAdsDbContext : DbContext
         modelBuilder.ConfigureRole();
         modelBuilder.ConfigureUser();
         modelBuilder.ConfigureCompanies();
+        modelBuilder.ConfigureCompaniesAutoCreation();
         modelBuilder.ConfigureOffice();
         modelBuilder.ConfigureUserRoles();
         modelBuilder.ConfigureMediaConfigs();
         modelBuilder.ConfigureMediaLibrary();
+        modelBuilder.ConfigureRetailDataProviders();
+        modelBuilder.ConfigureBudgets();
+        modelBuilder.ConfigureBudgetItems();
 
         base.OnModelCreating(modelBuilder);
     }

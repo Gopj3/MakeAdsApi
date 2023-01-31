@@ -12,17 +12,4 @@ public class RetailDataProviderRepository: GenericRepository<RetailDataProvider>
     public RetailDataProviderRepository(MakeAdsDbContext context) : base(context)
     {
     }
-
-    public Task<PagedList<RetailDataProvider>> GetPaginatedWithSearchAsync(int page, int pageSize, string? search = null,
-        CancellationToken cancellationToken = default)
-    {
-        var query = Context.RetailDataProviders.AsQueryable();
-
-        if (!string.IsNullOrWhiteSpace(search))
-        {
-            query = query.Where(x => x.Title.Contains(search));
-        }
-
-        return PagedList<RetailDataProvider>.ToPagedList(query, page, pageSize);
-    }
 }

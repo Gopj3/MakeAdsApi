@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
 
@@ -13,8 +14,11 @@ public sealed class UnitOfWork : IUnitOfWork
     public IRoleRepository RoleRepository { get; set; }
     public IUserProfileRepository UserProfileRepository { get; set; }
     public IUserProfileAvatarRepository UserProfileAvatarRepository { get; set; }
-    
     public IRetailDataProviderRepository RetailDataProviderRepository { get; set; }
+    public IFileRepository FileRepository { get; set; }
+    public ICompanyRepository CompanyRepository { get; set; }
+    public IOfficeRepository OfficeRepository { get; set; }
+
     public UnitOfWork(MakeAdsDbContext context)
     {
         _context = context;
@@ -23,11 +27,14 @@ public sealed class UnitOfWork : IUnitOfWork
         UserProfileRepository = new UserProfileRepository(context);
         UserProfileAvatarRepository = new UserProfileAvatarRepository(context);
         RetailDataProviderRepository = new RetailDataProviderRepository(context);
+        FileRepository = new FileRepository(context);
+        CompanyRepository = new CompanyRepository(context);
+        OfficeRepository = new OfficeRepository(context);
     }
 
-    public async Task SaveChangesAsync()
+    public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
     }
     
     public void Dispose()

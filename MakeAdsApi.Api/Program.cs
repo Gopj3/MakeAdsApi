@@ -3,8 +3,8 @@ using MakeAdsApi.Api;
 using MakeAdsApi.Api.Configurations;
 using MakeAdsApi.Api.Middlewares;
 using MakeAdsApi.Application;
+using MakeAdsApi.Application.Common.Abstractions.Jobs;
 using MakeAdsApi.Infrastructure;
-using MakeAdsApi.Infrastructure.Jobs.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

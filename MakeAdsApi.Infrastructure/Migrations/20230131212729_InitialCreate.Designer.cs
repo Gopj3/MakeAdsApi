@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MakeAdsApi.Infrastructure.Migrations
 {
     [DbContext(typeof(MakeAdsDbContext))]
-    [Migration("20230127194806_InitialCreate")]
+    [Migration("20230131212729_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,6 +54,67 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Branding");
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Budgets.Budget", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Budgets", (string)null);
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Budgets.BudgetItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BudgetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BudgetId");
+
+                    b.ToTable("BudgetItems", (string)null);
                 });
 
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Companies.Company", b =>
@@ -191,7 +252,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Property<Guid?>("BrandingId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CompanyId")
+                    b.Property<Guid>("CompanyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
@@ -200,18 +261,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("DeltaMediaConfigId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ExternalId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("MetaMediaConfigId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("SnapChatMediaConfigId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -227,18 +279,6 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .HasFilter("[BrandingId] IS NOT NULL");
 
                     b.HasIndex("CompanyId");
-
-                    b.HasIndex("DeltaMediaConfigId")
-                        .IsUnique()
-                        .HasFilter("[DeltaMediaConfigId] IS NOT NULL");
-
-                    b.HasIndex("MetaMediaConfigId")
-                        .IsUnique()
-                        .HasFilter("[MetaMediaConfigId] IS NOT NULL");
-
-                    b.HasIndex("SnapChatMediaConfigId")
-                        .IsUnique()
-                        .HasFilter("[SnapChatMediaConfigId] IS NOT NULL");
 
                     b.ToTable("Offices");
                 });
@@ -295,6 +335,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("OfficeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -303,6 +346,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OfficeId")
+                        .IsUnique();
 
                     b.ToTable("DeltaMediaConfigs");
                 });
@@ -364,6 +410,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("OfficeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -372,6 +421,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OfficeId")
+                        .IsUnique();
 
                     b.ToTable("MetaMediaConfigs");
                 });
@@ -400,6 +452,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("OfficeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -408,6 +463,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OfficeId")
+                        .IsUnique();
 
                     b.ToTable("SnapChatMediaConfigs");
                 });
@@ -488,10 +546,10 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"),
-                            CreatedAt = new DateTime(2023, 1, 27, 19, 48, 6, 565, DateTimeKind.Utc).AddTicks(7800),
+                            CreatedAt = new DateTime(2023, 1, 31, 21, 27, 28, 835, DateTimeKind.Utc).AddTicks(9690),
                             Email = "admin@admin-nordic.com",
-                            Password = "$2a$12$8VrKCJw.cKPdxfJVSdIjkeMnvwLJZ2SPXeomQ7SE2KxJjJvBv4lNy",
-                            UpdatedAt = new DateTime(2023, 1, 27, 19, 48, 6, 565, DateTimeKind.Utc).AddTicks(7880)
+                            Password = "$2a$12$h2M8uB7ZMd3.wn3JHv4TcujBEs3HRy7rQ2eX1LS4GxKq1JPVm9C16",
+                            UpdatedAt = new DateTime(2023, 1, 31, 21, 27, 28, 835, DateTimeKind.Utc).AddTicks(9770)
                         });
                 });
 
@@ -625,6 +683,28 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.ToTable("MediaLibraryVideos", (string)null);
                 });
 
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Budgets.Budget", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Companies.Company", "Company")
+                        .WithMany("Budgets")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Budgets.BudgetItem", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Budgets.Budget", "Budget")
+                        .WithMany("BudgetItems")
+                        .HasForeignKey("BudgetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Budget");
+                });
+
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Companies.Company", b =>
                 {
                     b.HasOne("MakeAdsApi.Domain.Entities.Brandings.Branding", "Branding")
@@ -659,29 +739,26 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .WithOne()
                         .HasForeignKey("MakeAdsApi.Domain.Entities.Offices.Office", "BrandingId");
 
-                    b.HasOne("MakeAdsApi.Domain.Entities.Companies.Company", null)
+                    b.HasOne("MakeAdsApi.Domain.Entities.Companies.Company", "Company")
                         .WithMany("Offices")
-                        .HasForeignKey("CompanyId");
-
-                    b.HasOne("MakeAdsApi.Domain.Entities.SocialMedias.DeltaMediaConfig", "DeltaMediaConfig")
-                        .WithOne()
-                        .HasForeignKey("MakeAdsApi.Domain.Entities.Offices.Office", "DeltaMediaConfigId");
-
-                    b.HasOne("MakeAdsApi.Domain.Entities.SocialMedias.MetaMediaConfig", "MetaMediaConfig")
-                        .WithOne()
-                        .HasForeignKey("MakeAdsApi.Domain.Entities.Offices.Office", "MetaMediaConfigId");
-
-                    b.HasOne("MakeAdsApi.Domain.Entities.SocialMedias.SnapChatMediaConfig", "SnapChatMediaConfig")
-                        .WithOne()
-                        .HasForeignKey("MakeAdsApi.Domain.Entities.Offices.Office", "SnapChatMediaConfigId");
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Branding");
 
-                    b.Navigation("DeltaMediaConfig");
+                    b.Navigation("Company");
+                });
 
-                    b.Navigation("MetaMediaConfig");
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.SocialMedias.DeltaMediaConfig", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Offices.Office", "Office")
+                        .WithOne("DeltaMediaConfig")
+                        .HasForeignKey("MakeAdsApi.Domain.Entities.SocialMedias.DeltaMediaConfig", "OfficeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("SnapChatMediaConfig");
+                    b.Navigation("Office");
                 });
 
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.SocialMedias.DeltaUiTemplateConfig", b =>
@@ -693,6 +770,28 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("DeltaMediaConfig");
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.SocialMedias.MetaMediaConfig", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Offices.Office", "Office")
+                        .WithOne("MetaMediaConfig")
+                        .HasForeignKey("MakeAdsApi.Domain.Entities.SocialMedias.MetaMediaConfig", "OfficeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Office");
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.SocialMedias.SnapChatMediaConfig", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Offices.Office", "Office")
+                        .WithOne("SnapChatMediaConfig")
+                        .HasForeignKey("MakeAdsApi.Domain.Entities.SocialMedias.SnapChatMediaConfig", "OfficeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Office");
                 });
 
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Users.User", b =>
@@ -786,15 +885,28 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Budgets.Budget", b =>
+                {
+                    b.Navigation("BudgetItems");
+                });
+
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Companies.Company", b =>
                 {
                     b.Navigation("AutoCreationConfigs");
+
+                    b.Navigation("Budgets");
 
                     b.Navigation("Offices");
                 });
 
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Offices.Office", b =>
                 {
+                    b.Navigation("DeltaMediaConfig");
+
+                    b.Navigation("MetaMediaConfig");
+
+                    b.Navigation("SnapChatMediaConfig");
+
                     b.Navigation("Users");
                 });
 

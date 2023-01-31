@@ -27,22 +27,6 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DeltaMediaConfigs",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClientId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DeltaMediaConfigs", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Files",
                 columns: table => new
                 {
@@ -58,24 +42,6 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Files", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MetaMediaConfigs",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AdAccountId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InstagramBusinessPageId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FacebookBusinessPageId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MetaMediaConfigs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,47 +79,6 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SnapChatMediaConfigs",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AdAccountId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClientId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClientSecret = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SnapChatMediaConfigs", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DeltaUiTemplateConfigs",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TemplateTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TemplateId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DeltaMediaConfigId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DeltaUiTemplateConfigs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DeltaUiTemplateConfigs_DeltaMediaConfigs_DeltaMediaConfigId",
-                        column: x => x.DeltaMediaConfigId,
-                        principalTable: "DeltaMediaConfigs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Companies",
                 columns: table => new
                 {
@@ -178,6 +103,28 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         name: "FK_Companies_RetailDataProviders_RetailDataProviderId",
                         column: x => x.RetailDataProviderId,
                         principalTable: "RetailDataProviders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Budgets",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Budgets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Budgets_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -217,11 +164,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExternalId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DeltaMediaConfigId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    MetaMediaConfigId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    SnapChatMediaConfigId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BrandingId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -238,22 +182,104 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         name: "FK_Offices_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BudgetItems",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BudgetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BudgetItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Offices_DeltaMediaConfigs_DeltaMediaConfigId",
-                        column: x => x.DeltaMediaConfigId,
-                        principalTable: "DeltaMediaConfigs",
-                        principalColumn: "Id");
+                        name: "FK_BudgetItems_Budgets_BudgetId",
+                        column: x => x.BudgetId,
+                        principalTable: "Budgets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeltaMediaConfigs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClientId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    OfficeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeltaMediaConfigs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Offices_MetaMediaConfigs_MetaMediaConfigId",
-                        column: x => x.MetaMediaConfigId,
-                        principalTable: "MetaMediaConfigs",
-                        principalColumn: "Id");
+                        name: "FK_DeltaMediaConfigs_Offices_OfficeId",
+                        column: x => x.OfficeId,
+                        principalTable: "Offices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MetaMediaConfigs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AdAccountId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InstagramBusinessPageId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FacebookBusinessPageId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    OfficeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MetaMediaConfigs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Offices_SnapChatMediaConfigs_SnapChatMediaConfigId",
-                        column: x => x.SnapChatMediaConfigId,
-                        principalTable: "SnapChatMediaConfigs",
-                        principalColumn: "Id");
+                        name: "FK_MetaMediaConfigs_Offices_OfficeId",
+                        column: x => x.OfficeId,
+                        principalTable: "Offices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SnapChatMediaConfigs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AdAccountId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClientId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClientSecret = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    OfficeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SnapChatMediaConfigs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SnapChatMediaConfigs_Offices_OfficeId",
+                        column: x => x.OfficeId,
+                        principalTable: "Offices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -276,6 +302,29 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         column: x => x.OfficeId,
                         principalTable: "Offices",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeltaUiTemplateConfigs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TemplateTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TemplateId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DeltaMediaConfigId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeltaUiTemplateConfigs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DeltaUiTemplateConfigs_DeltaMediaConfigs_DeltaMediaConfigId",
+                        column: x => x.DeltaMediaConfigId,
+                        principalTable: "DeltaMediaConfigs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -425,7 +474,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedAt", "DeletedAt", "Email", "OfficeId", "Password", "UpdatedAt" },
-                values: new object[] { new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(2023, 1, 27, 19, 48, 6, 565, DateTimeKind.Utc).AddTicks(7800), null, "admin@admin-nordic.com", null, "$2a$12$8VrKCJw.cKPdxfJVSdIjkeMnvwLJZ2SPXeomQ7SE2KxJjJvBv4lNy", new DateTime(2023, 1, 27, 19, 48, 6, 565, DateTimeKind.Utc).AddTicks(7880) });
+                values: new object[] { new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(2023, 1, 31, 21, 27, 28, 835, DateTimeKind.Utc).AddTicks(9690), null, "admin@admin-nordic.com", null, "$2a$12$h2M8uB7ZMd3.wn3JHv4TcujBEs3HRy7rQ2eX1LS4GxKq1JPVm9C16", new DateTime(2023, 1, 31, 21, 27, 28, 835, DateTimeKind.Utc).AddTicks(9770) });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
@@ -436,6 +485,16 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 name: "IX_BaseMediaLibraryFiles_UserId",
                 table: "BaseMediaLibraryFiles",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BudgetItems_BudgetId",
+                table: "BudgetItems",
+                column: "BudgetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Budgets_CompanyId",
+                table: "Budgets",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Companies_BrandingId",
@@ -455,9 +514,21 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DeltaMediaConfigs_OfficeId",
+                table: "DeltaMediaConfigs",
+                column: "OfficeId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DeltaUiTemplateConfigs_DeltaMediaConfigId",
                 table: "DeltaUiTemplateConfigs",
                 column: "DeltaMediaConfigId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MetaMediaConfigs_OfficeId",
+                table: "MetaMediaConfigs",
+                column: "OfficeId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Offices_BrandingId",
@@ -472,25 +543,10 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Offices_DeltaMediaConfigId",
-                table: "Offices",
-                column: "DeltaMediaConfigId",
-                unique: true,
-                filter: "[DeltaMediaConfigId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Offices_MetaMediaConfigId",
-                table: "Offices",
-                column: "MetaMediaConfigId",
-                unique: true,
-                filter: "[MetaMediaConfigId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Offices_SnapChatMediaConfigId",
-                table: "Offices",
-                column: "SnapChatMediaConfigId",
-                unique: true,
-                filter: "[SnapChatMediaConfigId] IS NOT NULL");
+                name: "IX_SnapChatMediaConfigs_OfficeId",
+                table: "SnapChatMediaConfigs",
+                column: "OfficeId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfileAvatars_UserProfileId",
@@ -524,6 +580,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "BudgetItems");
+
+            migrationBuilder.DropTable(
                 name: "CompanyAutoCreationConfigs");
 
             migrationBuilder.DropTable(
@@ -536,10 +595,22 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 name: "MediaLibraryVideos");
 
             migrationBuilder.DropTable(
+                name: "MetaMediaConfigs");
+
+            migrationBuilder.DropTable(
+                name: "SnapChatMediaConfigs");
+
+            migrationBuilder.DropTable(
                 name: "UserProfileAvatars");
 
             migrationBuilder.DropTable(
                 name: "UserRoles");
+
+            migrationBuilder.DropTable(
+                name: "Budgets");
+
+            migrationBuilder.DropTable(
+                name: "DeltaMediaConfigs");
 
             migrationBuilder.DropTable(
                 name: "BaseMediaLibraryFiles");
@@ -561,15 +632,6 @@ namespace MakeAdsApi.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Companies");
-
-            migrationBuilder.DropTable(
-                name: "DeltaMediaConfigs");
-
-            migrationBuilder.DropTable(
-                name: "MetaMediaConfigs");
-
-            migrationBuilder.DropTable(
-                name: "SnapChatMediaConfigs");
 
             migrationBuilder.DropTable(
                 name: "Branding");

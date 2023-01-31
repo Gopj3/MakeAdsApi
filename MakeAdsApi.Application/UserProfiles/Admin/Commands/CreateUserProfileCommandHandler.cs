@@ -12,7 +12,7 @@ using MediatR;
 
 namespace MakeAdsApi.Application.UserProfiles.Admin.Commands;
 
-public class CreateUserProfileCommandHandler: IRequestHandler<CreateUserProfileCommand, ErrorOr<UserProfileViewModel>>
+public class CreateUserProfileCommandHandler : IRequestHandler<CreateUserProfileCommand, ErrorOr<UserProfileViewModel>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IAwsS3Service _s3Service;
@@ -23,7 +23,8 @@ public class CreateUserProfileCommandHandler: IRequestHandler<CreateUserProfileC
         _s3Service = s3Service;
     }
 
-    public async Task<ErrorOr<UserProfileViewModel>> Handle(CreateUserProfileCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<UserProfileViewModel>> Handle(CreateUserProfileCommand request,
+        CancellationToken cancellationToken)
     {
         var user = await _unitOfWork.UserRepository.GetByIdAsync(request.UserId, cancellationToken);
 
@@ -41,7 +42,7 @@ public class CreateUserProfileCommandHandler: IRequestHandler<CreateUserProfileC
                 preSignedUrl = _s3Service.GetPreSignedUrl(request!.Avatar.FileName);
             }
         }
-        
+
         UserProfile userProfile = new()
         {
             Id = Guid.NewGuid(),
@@ -50,14 +51,14 @@ public class CreateUserProfileCommandHandler: IRequestHandler<CreateUserProfileC
             LastName = request.LastName,
             Title = request.Title,
             Phone = request.Phone,
-            Avatar = preSignedUrl is not null ? new UserProfileAvatar
-            {
-                Id = Guid.NewGuid(),
-                FileName = request.Avatar!.FileName,
-                FileExtension = request.Avatar!.ContentType,
-                PreSignedUrl = preSignedUrl,
-                PreSignedUrlCreatedAt = DateTime.UtcNow
-            } : null,
+            Avatar = preSignedUrl is not null
+                ? new UserProfileAvatar(
+                    Guid.NewGuid(),
+                    request.Avatar!.FileName,
+                    request.Avatar!.ContentType,
+                    preSignedUrl
+                )
+                : null,
         };
 
         await _unitOfWork.UserProfileRepository.CreateAsync(userProfile, cancellationToken);

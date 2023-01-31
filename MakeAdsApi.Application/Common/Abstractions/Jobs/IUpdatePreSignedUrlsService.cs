@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MakeAdsApi.Infrastructure.Jobs.Abstractions;
+namespace MakeAdsApi.Application.Common.Abstractions.Jobs;
 
 public interface IUpdatePreSignedUrlsService
 {

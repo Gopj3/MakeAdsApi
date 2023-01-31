@@ -28,6 +28,15 @@ public class UserRepository : GenericRepository<User>, IUserRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(filter!, cancellationToken);
     }
+    
+    public async Task<User?> GetWithProfileById(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await Context
+            .Users
+            .Include(x => x.Profile)
+            .ThenInclude(x => x.Avatar)
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+    }
 
     public async Task<PagedList<User>> GetPaginatedWithSearchAsync(int page, int pageSize, string? search = null,
         CancellationToken cancellationToken = default)
@@ -37,12 +46,13 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
         if (!String.IsNullOrWhiteSpace(search))
         {
+            string trimmedSearch = search.Trim();
             query = query
                 .Where(x =>
-                    x.Email.Contains(search)
+                    x.Email.Contains(trimmedSearch)
                     || (x.Profile != null &&
-                        (x.Profile.FirstName.Contains(search) ||
-                         x.Profile.LastName.Contains(search)
+                        (x.Profile.FirstName.Contains(trimmedSearch) ||
+                         x.Profile.LastName.Contains(trimmedSearch)
                         )
                     )
                 );

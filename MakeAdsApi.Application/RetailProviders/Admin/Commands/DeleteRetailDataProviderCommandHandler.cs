@@ -26,7 +26,7 @@ public class DeleteRetailDataProviderCommandHandler: IRequestHandler<DeleteRetai
         }
         
         _unitOfWork.RetailDataProviderRepository.Delete(retailProvider);
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         
         return Unit.Value;
     }

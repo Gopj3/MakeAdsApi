@@ -82,8 +82,7 @@ public class UsersController : AdminApiController
         );
     }
 
-
-    [HttpGet("{id}/user-profile")]
+    [HttpGet("{id}/profiles")]
     public async Task<IActionResult> Get([FromRoute] string id)
     {
         if (!Guid.TryParse(id, out var userId))
@@ -99,7 +98,7 @@ public class UsersController : AdminApiController
         );
     }
 
-    [HttpPost("{id}/user-profile")]
+    [HttpPost("{id}/profiles")]
     public async Task<IActionResult> Create([FromRoute] string id, [FromForm] CreateEditUserProfileRequest request)
     {
         if (!Guid.TryParse(id, out var userId))
@@ -108,6 +107,29 @@ public class UsersController : AdminApiController
         }
 
         CreateUserProfileCommand command = new(
+            userId, request.FirstName,
+            request.LastName,
+            request.Title,
+            request.Phone,
+            request.Avatar
+        );
+        var result = await _mediator.Send(command);
+
+        return result.Match(
+            res => Ok(res),
+            errors => Problem(errors)
+        );
+    }
+    
+    [HttpPut("{id}/profiles")]
+    public async Task<IActionResult> Update([FromRoute] string id, [FromForm] CreateEditUserProfileRequest request)
+    {
+        if (!Guid.TryParse(id, out var userId))
+        {
+            return Problem("Invalid user id");
+        }
+
+        UpdateUserProfileCommand command = new(
             userId, request.FirstName,
             request.LastName,
             request.Title,

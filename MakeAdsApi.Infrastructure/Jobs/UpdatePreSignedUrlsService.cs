@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MakeAdsApi.Application.Common.Abstractions.Jobs;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
 using MakeAdsApi.Application.Common.Abstractions.Services.AWS;
 using MakeAdsApi.Domain.Entities.Files;
-using MakeAdsApi.Infrastructure.Jobs.Abstractions;
 using Microsoft.IdentityModel.Tokens;
 
 namespace MakeAdsApi.Infrastructure.Jobs;
@@ -24,9 +24,9 @@ public class UpdatePreSignedUrlsService: IUpdatePreSignedUrlsService
 
     public async Task UpdatePreSignedUrlsAsync(CancellationToken cancellationToken = default)
     {
-        List<UserProfileAvatar> filesToUpdate =
-            await _unitOfWork.UserProfileAvatarRepository.GetNeedsToBeUpdatedAsync(cancellationToken);
-
+        List<File> filesToUpdate =
+            await _unitOfWork.FileRepository.GetNeedsToBeUpdatedAsync(cancellationToken);
+        
         if (filesToUpdate.Any())
         {
             filesToUpdate.ForEach(file =>
@@ -38,7 +38,7 @@ public class UpdatePreSignedUrlsService: IUpdatePreSignedUrlsService
                     file.PreSignedUrlCreatedAt = DateTime.UtcNow;
                 }
                 
-                _unitOfWork.UserProfileAvatarRepository.Update(file);
+                _unitOfWork.FileRepository.Update(file);
             });
 
             await _unitOfWork.SaveChangesAsync();

@@ -9,13 +9,13 @@ internal static class OfficeConfiguration
     {
         modelBuilder.Entity<Office>()
             .HasOne(o => o.DeltaMediaConfig)
-            .WithOne();
+            .WithOne(x => x.Office);
         modelBuilder.Entity<Office>()
             .HasOne(o => o.MetaMediaConfig)
-            .WithOne();
+            .WithOne(x => x.Office);
         modelBuilder.Entity<Office>()
             .HasOne(o => o.SnapChatMediaConfig)
-            .WithOne();
+            .WithOne(x => x.Office);
         modelBuilder.Entity<Office>()
             .HasOne(x => x.Branding)
             .WithOne();

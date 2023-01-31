@@ -1,5 +1,6 @@
-using System.Collections.Generic;
+using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using ErrorOr;
@@ -26,8 +27,15 @@ public class GetPaginatedProviderQueryHandler
         CancellationToken cancellationToken
     )
     {
+        Expression<Func<RetailDataProvider, bool>>? filter = null;
+
+        if (!String.IsNullOrWhiteSpace(request.Search))
+        {
+            filter = provider => provider.Title.Contains(request.Search);
+        }
+
         PagedList<RetailDataProvider> retailDataProviders = await _unitOfWork.RetailDataProviderRepository
-            .GetPaginatedWithSearchAsync(request.Page, request.PageSize, request.Search, cancellationToken);
+            .GetEntitiesPaginatedAsync(request.Page, request.PageSize, filter, cancellationToken);
 
         return new BaseViewListModel<RetailDataProviderViewModel>
         {
@@ -35,7 +43,7 @@ public class GetPaginatedProviderQueryHandler
             TotalCount = retailDataProviders.TotalCount,
             Page = retailDataProviders.CurrentPage,
             PageSize = retailDataProviders.PageSize,
-            HasNextPage =  retailDataProviders.HasNext,
+            HasNextPage = retailDataProviders.HasNext,
             HasPreviousPage = retailDataProviders.HasPrevious
         };
     }

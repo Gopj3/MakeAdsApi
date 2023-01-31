@@ -16,6 +16,16 @@ public class RetailProvidersController : AdminApiController
         _mediator = mediator;
     }
 
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllAsync()
+    {
+        var result = await _mediator.Send(new GetAllProvidersQuery());
+        return result.Match(
+            x => Ok(x),
+            err => Problem(err)
+        );
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetPaginatedAsync(
         [FromQuery(Name = "page")] int page = 1,

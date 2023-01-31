@@ -1,10 +1,11 @@
+using MakeAdsApi.Application.Common.Abstractions.Jobs;
+
 namespace MakeAdsApi.Infrastructure;
 
 using System.Threading;
 using Hangfire;
 using MakeAdsApi.Application.Common.Abstractions.Services.AWS;
 using Jobs;
-using Jobs.Abstractions;
 using Services.AWS;
 
 using MakeAdsApi.Application.Common.Abstractions.Authentication;

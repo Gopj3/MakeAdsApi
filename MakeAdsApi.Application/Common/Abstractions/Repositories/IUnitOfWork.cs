@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MakeAdsApi.Application.Common.Abstractions.Repositories;
@@ -10,6 +11,9 @@ public interface IUnitOfWork: IDisposable
     IUserProfileRepository UserProfileRepository { get; set; }
     IUserProfileAvatarRepository UserProfileAvatarRepository { get; set; }
     IRetailDataProviderRepository RetailDataProviderRepository { get; set; }
+    IFileRepository FileRepository { get; set; }
+    ICompanyRepository CompanyRepository { get; set; }
+    IOfficeRepository OfficeRepository { get; set; }
     
-    Task SaveChangesAsync();
+    Task SaveChangesAsync(CancellationToken cancellationToken = default);
 }

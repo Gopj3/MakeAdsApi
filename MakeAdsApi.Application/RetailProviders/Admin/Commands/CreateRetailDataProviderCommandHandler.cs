@@ -33,6 +33,7 @@ public class CreateRetailDataProviderCommandHandler :
             request.UpdateUserDataUrl
         );
         await _unitOfWork.RetailDataProviderRepository.CreateAsync(retailProvider, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return RetailDataProviderViewModel.From(retailProvider);
     }

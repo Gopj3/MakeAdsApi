@@ -14,12 +14,4 @@ public class UserProfileAvatarRepository: GenericRepository<UserProfileAvatar>, 
     public UserProfileAvatarRepository(MakeAdsDbContext context) : base(context)
     {
     }
-
-    public async Task<List<UserProfileAvatar>> GetNeedsToBeUpdatedAsync(CancellationToken cancellationToken = default)
-    {
-        return await Context.UserProfileAvatars.Where(
-            x => x.PreSignedUrl != null && x.PreSignedUrlCreatedAt != null
-            && x.PreSignedUrlCreatedAt.Value.AddDays(6) < DateTime.UtcNow)
-            .ToListAsync(cancellationToken: cancellationToken);
-    }
 }

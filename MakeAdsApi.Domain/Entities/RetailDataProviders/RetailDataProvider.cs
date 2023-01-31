@@ -22,6 +22,7 @@ public class RetailDataProvider : BaseEntity
         string? updateUserDataUrl
     )
     {
+        Id = id;
         Title = title;
         FetchPropertyDataUrl = fetchPropertyDataUrl;
         UpdatePropertyDataUrl = updatePropertyDataUrl;

@@ -1,7 +1,7 @@
 using MakeAdsApi.Application.Common.ViewModels;
 using MakeAdsApi.Domain.Entities.Budgets;
 
-namespace MakeAdsApi.Application.Budgets.Admin.Models;
+namespace MakeAdsApi.Application.BudgetItems.Shared.Models;
 
 public class BudgetItemViewModel: BaseViewModel
 {
@@ -12,8 +12,10 @@ public class BudgetItemViewModel: BaseViewModel
     {
         return new BudgetItemViewModel
         {
+            Id = budgetItem.Id,
+            Type = budgetItem.Type.Value,
             Value = budgetItem.Value,
-            Type = budgetItem.Type.Value
+            CreatedAt = budgetItem.CreatedAt.ToLongDateString()
         };
     }
 }

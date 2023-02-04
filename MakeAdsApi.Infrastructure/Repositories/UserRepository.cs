@@ -58,6 +58,6 @@ public class UserRepository : GenericRepository<User>, IUserRepository
                 );
         }
 
-        return await PagedList<User>.ToPagedList(query.AsNoTracking(), page, pageSize);
+        return await PagedList<User>.ToPagedListAsync(query.AsNoTracking(), page, pageSize, cancellationToken);
     }
 }

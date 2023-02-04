@@ -16,4 +16,10 @@ public class BudgetItem: BaseEntity
         Value = value;
         Type = type;
     }
+
+    public void Update(decimal value, BudgetItemType type)
+    {
+        Value = value;
+        Type = type;
+    }
 }

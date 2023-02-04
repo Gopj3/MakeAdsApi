@@ -1,18 +1,23 @@
 using Hangfire;
 using MakeAdsApi.Api;
+using MakeAdsApi.Api.Common;
 using MakeAdsApi.Api.Configurations;
 using MakeAdsApi.Api.Middlewares;
 using MakeAdsApi.Application;
 using MakeAdsApi.Application.Common.Abstractions.Jobs;
 using MakeAdsApi.Infrastructure;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 {
-    builder.Services.AddControllers();
+    builder.Services.AddControllers(options =>
+    {
+        options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
+    });
     builder.Services.AddSwaggerGen();
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddRouting(options => options.LowercaseUrls = true);
+    builder.Services.AddRouting();
 
     builder.Services.AddApi();
     builder.Services.AddApplication();

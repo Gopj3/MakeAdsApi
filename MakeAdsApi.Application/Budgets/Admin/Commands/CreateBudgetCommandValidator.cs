@@ -8,6 +8,7 @@ public class CreateBudgetCommandValidator: CreateEditCommandValidator<CreateBudg
     public CreateBudgetCommandValidator(IUnitOfWork unitOfWork) : base(unitOfWork)
     {
         RuleFor(x => x.Title).NotNull().NotEmpty();
+        RuleFor(x => x.Type).NotNull().NotEmpty();
         RuleFor(x => x.CompanyId)
             .NotNull()
             .NotEmpty()

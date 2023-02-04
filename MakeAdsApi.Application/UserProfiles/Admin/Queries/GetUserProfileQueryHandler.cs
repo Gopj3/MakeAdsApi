@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ErrorOr;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
-using MakeAdsApi.Application.UserProfiles.Admin.Models;
+using MakeAdsApi.Application.UserProfiles.Shared.Models;
 using MakeAdsApi.Domain.Errors;
 using MediatR;
 

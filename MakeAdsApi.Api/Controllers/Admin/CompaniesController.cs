@@ -1,3 +1,4 @@
+using MakeAdsApi.Application.Budgets.Admin.Queries.Lists;
 using MakeAdsApi.Application.Companies.Admin.Commands;
 using MakeAdsApi.Application.Companies.Admin.Queries.List;
 using MakeAdsApi.Application.Companies.Admin.Queries.Single;
@@ -21,7 +22,7 @@ public class CompaniesController : AdminApiController
     {
         if (!Guid.TryParse(id, out var companyId))
         {
-            return Problem("Invalid company id");
+            return Problem("Invalid company id provided");
         }
         
         var res = await _mediator.Send(new GetCompanyByIdQuery(companyId));
@@ -62,7 +63,7 @@ public class CompaniesController : AdminApiController
     {
         if (!Guid.TryParse(request.RetailDataProviderId, out var providerId))
         {
-            return Problem("Invalid provider id");
+            return Problem("Invalid provider id provided");
         }
 
         var command = new CreateCompanyCommand(
@@ -83,7 +84,7 @@ public class CompaniesController : AdminApiController
     {
         if (!Guid.TryParse(request.RetailDataProviderId, out var providerId))
         {
-            return Problem("Invalid provider id");
+            return Problem("Invalid provider id provided");
         }
 
         var command = new UpdateCompanyCommand(
@@ -94,6 +95,28 @@ public class CompaniesController : AdminApiController
         
         var res = await _mediator.Send(command);
         
+        return res.Match(
+            res => Ok(res),
+            err => Problem(err)
+        );
+    }
+    
+    [HttpGet("{id}/budgets")]
+    public async Task<IActionResult> GetBudgetsPaginatedAsync
+    (
+        string id,
+        [FromQuery] int page = 0,
+        [FromQuery] int pageSize = 5,
+        [FromQuery] string? search = null)
+    {
+        if (!Guid.TryParse(id, out var companyId))
+        {
+            return Problem("Invalid company id provided");
+        }
+        
+        var query = new PaginatedBudgetsQuery(companyId, page, pageSize, search);
+        var res = await _mediator.Send(query);
+
         return res.Match(
             res => Ok(res),
             err => Problem(err)

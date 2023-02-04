@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace MakeAdsApi.Application.Budgets.Admin.Quries.Lists;
+namespace MakeAdsApi.Application.Budgets.Admin.Queries.Lists;
 
 public class PaginatedBudgetsQueryValidator: AbstractValidator<PaginatedBudgetsQuery>
 {

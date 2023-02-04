@@ -1,7 +1,7 @@
 using MakeAdsApi.Application.Common.ViewModels;
 using MakeAdsApi.Domain.Entities.Users;
 
-namespace MakeAdsApi.Application.UserProfiles.Admin.Models;
+namespace MakeAdsApi.Application.UserProfiles.Shared.Models;
 
 public class UserProfileViewModel: BaseViewModel
 {

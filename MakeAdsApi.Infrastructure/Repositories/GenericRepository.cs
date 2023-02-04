@@ -53,7 +53,7 @@ public class GenericRepository<T> : IGenericRepository<T>
             query = query.Where(filter);
         }
         
-        return await PagedList<T>.ToPagedList(query, page, pageSize);
+        return await PagedList<T>.ToPagedListAsync(query, page, pageSize, token);
     }
 
     public async Task<List<T>> GetByExpressionAsync(Expression<Func<T, bool>> filter, CancellationToken token = default)
@@ -72,7 +72,7 @@ public class GenericRepository<T> : IGenericRepository<T>
         return await _dbSet.CountAsync();
     }
 
-    public async Task DeleteById(Guid id, CancellationToken token = default)
+    public async Task DeleteByIdAsync(Guid id, CancellationToken token = default)
     {
         T? entity = await GetByIdAsync(id, token);
 

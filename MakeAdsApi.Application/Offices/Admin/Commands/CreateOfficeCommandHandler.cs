@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -31,7 +32,7 @@ public class CreateOfficeCommandHandler : IRequestHandler<CreateOfficeCommand, E
         }
 
         Office office = new Office(request.Title, request.ExternalId, request.CompanyId);
-        await _unitOfWork.OfficeRepository.CreateAsync(office);
+        await _unitOfWork.OfficeRepository.CreateAsync(office, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return OfficeViewModel.From(office);

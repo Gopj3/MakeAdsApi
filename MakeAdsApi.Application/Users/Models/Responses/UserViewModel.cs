@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MakeAdsApi.Application.Common.ViewModels;
 using MakeAdsApi.Application.Roles.Models;
-using MakeAdsApi.Application.UserProfiles.Admin.Models;
+using MakeAdsApi.Application.UserProfiles.Shared.Models;
 using MakeAdsApi.Domain.Entities.Users;
 
 namespace MakeAdsApi.Application.Users.Models.Responses;

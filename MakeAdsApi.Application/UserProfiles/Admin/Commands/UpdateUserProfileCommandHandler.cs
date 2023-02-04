@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using ErrorOr;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
 using MakeAdsApi.Application.Common.Abstractions.Services.AWS;
-using MakeAdsApi.Application.UserProfiles.Admin.Models;
+using MakeAdsApi.Application.UserProfiles.Shared.Models;
 using MakeAdsApi.Domain.Entities.Files;
 using MakeAdsApi.Domain.Entities.Users;
 using MakeAdsApi.Domain.Errors;

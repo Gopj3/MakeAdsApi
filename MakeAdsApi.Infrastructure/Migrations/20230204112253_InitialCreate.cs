@@ -113,6 +113,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -333,7 +334,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RetailPropertyId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ExternalUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -474,7 +476,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedAt", "DeletedAt", "Email", "OfficeId", "Password", "UpdatedAt" },
-                values: new object[] { new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(2023, 1, 31, 21, 27, 28, 835, DateTimeKind.Utc).AddTicks(9690), null, "admin@admin-nordic.com", null, "$2a$12$h2M8uB7ZMd3.wn3JHv4TcujBEs3HRy7rQ2eX1LS4GxKq1JPVm9C16", new DateTime(2023, 1, 31, 21, 27, 28, 835, DateTimeKind.Utc).AddTicks(9770) });
+                values: new object[] { new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(2023, 2, 4, 11, 22, 52, 789, DateTimeKind.Utc).AddTicks(230), null, "admin@admin-nordic.com", null, "$2a$12$wq2WLhF1/7aAHDRwD9hjn.cf8l3Q1Q5dhJO8u.w6mzqrUfEi7XWNG", new DateTime(2023, 2, 4, 11, 22, 52, 789, DateTimeKind.Utc).AddTicks(320) });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",

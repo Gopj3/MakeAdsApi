@@ -23,7 +23,7 @@ public interface IGenericRepository<T> where T : class
 
     Task<List<T>> GetByExpressionAsync(Expression<Func<T, bool>> filter, CancellationToken token = default);
     Task<T?> GetByExpressionFirstAsync(Expression<Func<T, bool>> filter, CancellationToken token = default);
-    Task DeleteById(Guid id, CancellationToken token = default);
+    Task DeleteByIdAsync(Guid id, CancellationToken token = default);
     void Delete(T entity);
     void Update(T entity);
     Task<List<T>> GetBySpecification(ISpecification<T> specification = null);

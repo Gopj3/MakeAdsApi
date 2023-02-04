@@ -8,6 +8,7 @@ public static class BudgetItemConfiguration
 {
     public static void ConfigureBudgetItems(this ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<BudgetItem>().HasQueryFilter(x => x.DeletedAt == null);
         modelBuilder.Entity<BudgetItem>().ToTable("BudgetItems");
         modelBuilder.Entity<BudgetItem>()
             .Property(x => x.Type)

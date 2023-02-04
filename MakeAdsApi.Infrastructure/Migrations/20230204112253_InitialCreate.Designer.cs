@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MakeAdsApi.Infrastructure.Migrations
 {
     [DbContext(typeof(MakeAdsDbContext))]
-    [Migration("20230131212729_InitialCreate")]
+    [Migration("20230204112253_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,6 +72,10 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -546,10 +550,10 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"),
-                            CreatedAt = new DateTime(2023, 1, 31, 21, 27, 28, 835, DateTimeKind.Utc).AddTicks(9690),
+                            CreatedAt = new DateTime(2023, 2, 4, 11, 22, 52, 789, DateTimeKind.Utc).AddTicks(230),
                             Email = "admin@admin-nordic.com",
-                            Password = "$2a$12$h2M8uB7ZMd3.wn3JHv4TcujBEs3HRy7rQ2eX1LS4GxKq1JPVm9C16",
-                            UpdatedAt = new DateTime(2023, 1, 31, 21, 27, 28, 835, DateTimeKind.Utc).AddTicks(9770)
+                            Password = "$2a$12$wq2WLhF1/7aAHDRwD9hjn.cf8l3Q1Q5dhJO8u.w6mzqrUfEi7XWNG",
+                            UpdatedAt = new DateTime(2023, 2, 4, 11, 22, 52, 789, DateTimeKind.Utc).AddTicks(320)
                         });
                 });
 
@@ -636,6 +640,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Files.MediaLibrary.BaseMediaLibraryFile", b =>
                 {
                     b.HasBaseType("MakeAdsApi.Domain.Entities.Files.File");
+
+                    b.Property<string>("ExternalUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RetailPropertyId")
                         .IsRequired()

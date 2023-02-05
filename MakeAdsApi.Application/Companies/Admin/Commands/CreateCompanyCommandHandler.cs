@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,7 +38,13 @@ public class CreateCompanyCommandHandler: IRequestHandler<CreateCompanyCommand, 
             return DomainErrors.RetailDataProvider.NotFound;
         }
 
-        var company = new Company(request.Title, request.ExternalId, retailDataProvider.Id);
+        var company = new Company
+        {
+            Id = Guid.NewGuid(),
+            Title = request.Title, 
+            ExternalId = request.ExternalId, 
+            RetailDataProviderId = retailDataProvider.Id
+        };
         await _unitOfWork.CompanyRepository.CreateAsync(company, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

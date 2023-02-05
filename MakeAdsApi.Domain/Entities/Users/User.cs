@@ -13,19 +13,4 @@ public class User: BaseEntity
     public Guid? OfficeId { get; set; }
     public Office? Office { get; set; }
     public List<UserRole> UserRoles { get; set; } = new();
-
-    public User(Guid id, string email, string password, List<UserRole> userRoles)
-    {
-        Id = id;
-        Email = email;
-        Password = password;
-        UserRoles = userRoles;
-    }
-
-    public User(Guid id, string email, string password)
-    {
-        Id = id;
-        Email = email;
-        Password = password;
-    }
 }

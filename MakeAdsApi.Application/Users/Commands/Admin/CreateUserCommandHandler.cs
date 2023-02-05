@@ -41,12 +41,12 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Error
             .GetByExpressionAsync(x => command.RoleIds.Contains(x.Id), cancellationToken);
 
         var userId = Guid.NewGuid();
-        var user = new User(
-            userId,
-            command.Email,
-            _passwordHasher.HashPassword(String.Empty),
-            roles.Select(x => UserRole.Create(userId, x)).ToList()
-        );
+        var user = new User {
+            Id = userId,
+            Email = command.Email,
+            Password = _passwordHasher.HashPassword(String.Empty),
+            UserRoles = roles.Select(x => UserRole.Create(userId, x)).ToList()
+        };
 
         await _unitOfWork.UserRepository.CreateAsync(user, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

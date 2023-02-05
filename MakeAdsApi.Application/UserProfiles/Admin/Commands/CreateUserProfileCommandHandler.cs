@@ -45,23 +45,23 @@ public class CreateUserProfileCommandHandler : IRequestHandler<CreateUserProfile
 
         Guid userProfileId = Guid.NewGuid();
 
-        var avatar = preSignedUrl is not null
-            ? new UserProfileAvatar(
-                userProfileId, 
-                request.Avatar!.FileName,
-                request.Avatar!.ContentType,
-                preSignedUrl)
-            : null;
-
-        UserProfile userProfile = new(
-            userProfileId,
-            request.FirstName,
-            request.LastName,
-            request.Title,
-            request.Phone,
-            avatar,
-            user.Id
-        );
+        var userProfile = new UserProfile
+        {
+            Id = userProfileId,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            Title = request.Title,
+            Phone = request.Phone,
+            Avatar = preSignedUrl is not null
+                ? new UserProfileAvatar{
+                    Id = Guid.NewGuid(),
+                    UserProfileId = userProfileId,
+                    FileName = request.Avatar!.FileName,
+                    FileExtension = request.Avatar!.ContentType,
+                    PreSignedUrl = preSignedUrl
+                    }
+                : null
+        };
 
         await _unitOfWork.UserProfileRepository.CreateAsync(userProfile, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

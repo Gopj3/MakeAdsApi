@@ -1,17 +1,14 @@
+namespace MakeAdsApi.Infrastructure;
+
 using MakeAdsApi.Application.Common.Abstractions.Helpers;
 using MakeAdsApi.Application.Common.Abstractions.Jobs;
 using MakeAdsApi.Application.Common.Abstractions.Services.RetailDataProviders;
-using MakeAdsApi.Infrastructure.Helpers;
-using MakeAdsApi.Infrastructure.Services.RetailDataProviders;
-
-namespace MakeAdsApi.Infrastructure;
-
-using System.Threading;
+using Helpers;
+using Services.RetailDataProviders;
 using Hangfire;
 using MakeAdsApi.Application.Common.Abstractions.Services.AWS;
 using Jobs;
 using Services.AWS;
-
 using MakeAdsApi.Application.Common.Abstractions.Authentication;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
 using Domain.Entities.Users;
@@ -35,6 +32,7 @@ public static class DependencyInjection
         services.AddScoped<IUpdatePreSignedUrlsService, UpdatePreSignedUrlsService>();
         services.AddHttpClient<IRetailDataProviderHttpService, RetailDataProviderHttpService>();
         services.AddHttpClient<IFilesHelper, FilesHelper>();
+        services.AddScoped<IFilesHelper, FilesHelper>();
         
         services.AddHangfire(x => { x.UseSqlServerStorage(builderConfiguration.GetConnectionString("HangFireDb")); });
         services.AddHangfireServer();

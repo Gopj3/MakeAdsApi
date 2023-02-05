@@ -31,7 +31,13 @@ public class CreateOfficeCommandHandler : IRequestHandler<CreateOfficeCommand, E
             return DomainErrors.Office.DuplicateCompanyExternalId;
         }
 
-        Office office = new Office(request.Title, request.ExternalId, request.CompanyId);
+        Office office = new Office
+        {
+            Id = Guid.NewGuid(),
+            Title = request.Title,
+            ExternalId = request.ExternalId, 
+            CompanyId = request.CompanyId
+        };
         await _unitOfWork.OfficeRepository.CreateAsync(office, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

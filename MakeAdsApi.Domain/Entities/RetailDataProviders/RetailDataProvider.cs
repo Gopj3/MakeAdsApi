@@ -13,23 +13,6 @@ public class RetailDataProvider : BaseEntity
     public string? UpdateUserDataUrl { get; set; } = null;
     public List<Company> Companies { get; set; } = new();
 
-    public RetailDataProvider(
-        Guid id,
-        string title,
-        string? fetchPropertyDataUrl,
-        string? updatePropertyDataUrl,
-        string? fetchUserDataUrl,
-        string? updateUserDataUrl
-    )
-    {
-        Id = id;
-        Title = title;
-        FetchPropertyDataUrl = fetchPropertyDataUrl;
-        UpdatePropertyDataUrl = updatePropertyDataUrl;
-        FetchUserDataUrl = fetchUserDataUrl;
-        UpdateUserDataUrl = updateUserDataUrl;
-    }
-
     public void Update(
         string title,
         string? fetchPropertyDataUrl,

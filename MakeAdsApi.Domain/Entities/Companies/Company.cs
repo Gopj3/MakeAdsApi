@@ -19,13 +19,6 @@ public class Company: BaseEntity
     public Guid? BrandingId { get; set; } = null;
     public Branding? Branding { get; set; } = null;
 
-    public Company(string title, string externalId, Guid retailDataProviderId)
-    {
-        Title = title;
-        ExternalId = externalId;
-        RetailDataProviderId = retailDataProviderId;
-    }
-
     public void Update(string title, string externalId, Guid retailDataProviderId)
     {
         Title = title;

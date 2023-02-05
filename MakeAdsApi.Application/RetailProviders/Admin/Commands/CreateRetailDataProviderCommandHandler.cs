@@ -24,14 +24,15 @@ public class CreateRetailDataProviderCommandHandler :
         CancellationToken cancellationToken
     )
     {
-        var retailProvider = new RetailDataProvider(
-            Guid.NewGuid(),
-            request.Title,
-            request.FetchPropertyDataUrl,
-            request.UpdatePropertyDataUrl,
-            request.FetchUserDataUrl,
-            request.UpdateUserDataUrl
-        );
+        var retailProvider = new RetailDataProvider
+        {
+            Id = Guid.NewGuid(),
+            Title = request.Title,
+            FetchPropertyDataUrl = request.FetchPropertyDataUrl,
+            UpdatePropertyDataUrl = request.UpdatePropertyDataUrl,
+            FetchUserDataUrl = request.FetchUserDataUrl,
+            UpdateUserDataUrl = request.UpdateUserDataUrl
+        };
         await _unitOfWork.RetailDataProviderRepository.CreateAsync(retailProvider, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

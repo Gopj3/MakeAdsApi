@@ -21,14 +21,6 @@ public class Office: BaseEntity
     public Guid? BrandingId { get; set; } = null;
     public Branding? Branding { get; set; } = null;
 
-    public Office(string title, string externalId, Guid companyId)
-    {
-        Id = Guid.NewGuid();
-        Title = title;
-        ExternalId = externalId;
-        CompanyId = companyId;
-    }
-
     public void Update(string title, string externalId, Guid companyId)
     {
         Title = title;

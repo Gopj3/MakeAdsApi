@@ -1,5 +1,5 @@
 using MakeAdsApi.Application.Users.Commands.Common;
-using MakeAdsApi.Contracts.Outer;
+using MakeAdsApi.Contracts.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +16,7 @@ public class ConnectUsersFromRetailDataController: ApiController
 
     [HttpPost]
     public async Task<IActionResult> ConnectUserFromRetailDataAsync(
-        [FromBody] InitiateUserRequest request)
+        [FromBody] ConnectUserRequest request)
     {
         if (!Guid.TryParse(request.CompanyId, out var companyId))
         {

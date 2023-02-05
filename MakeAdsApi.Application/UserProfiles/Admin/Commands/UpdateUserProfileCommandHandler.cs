@@ -99,12 +99,14 @@ public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfile
 
             return;
         }
-        
-        profile.Avatar = new UserProfileAvatar(
-            profile.Id,
-            request.Avatar!.FileName,
-            request.Avatar.ContentType,
-            preSignedUrl
-        );
+
+        profile.Avatar = new UserProfileAvatar
+        {
+            Id = Guid.NewGuid(),
+            UserProfileId = profile.Id,
+            FileName = request.Avatar!.FileName,
+            FileExtension = request.Avatar.ContentType,
+            PreSignedUrl = preSignedUrl
+        };
     }
 }

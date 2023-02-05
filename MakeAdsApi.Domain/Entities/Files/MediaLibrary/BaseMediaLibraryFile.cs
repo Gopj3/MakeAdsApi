@@ -10,12 +10,4 @@ public abstract class BaseMediaLibraryFile : File
     [Required] public Guid UserId { get; set; }
     [Required] public User User { get; set; }
     public string? ExternalUrl { get; set; }
-
-    protected BaseMediaLibraryFile(
-        string fileName,
-        string fileExtension,
-        string? preSignedUrl
-    ) : base(fileName, fileExtension, preSignedUrl)
-    {
-    }
 }

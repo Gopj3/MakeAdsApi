@@ -14,7 +14,7 @@ public class CompanyRepository: GenericRepository<Company>, ICompanyRepository
     {
     }
 
-    public async Task<Company?> GetCompanyByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Company?> GetCompanyWithProviderByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await Context.Companies
             .IgnoreQueryFilters()

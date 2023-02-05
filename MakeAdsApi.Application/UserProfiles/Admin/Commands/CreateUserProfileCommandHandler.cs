@@ -43,26 +43,28 @@ public class CreateUserProfileCommandHandler : IRequestHandler<CreateUserProfile
             }
         }
 
-        UserProfile userProfile = new()
-        {
-            Id = Guid.NewGuid(),
-            UserId = user.Id,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Title = request.Title,
-            Phone = request.Phone,
-            Avatar = preSignedUrl is not null
-                ? new UserProfileAvatar(
-                    Guid.NewGuid(),
-                    request.Avatar!.FileName,
-                    request.Avatar!.ContentType,
-                    preSignedUrl
-                )
-                : null,
-        };
+        Guid userProfileId = Guid.NewGuid();
+
+        var avatar = preSignedUrl is not null
+            ? new UserProfileAvatar(
+                userProfileId, 
+                request.Avatar!.FileName,
+                request.Avatar!.ContentType,
+                preSignedUrl)
+            : null;
+
+        UserProfile userProfile = new(
+            userProfileId,
+            request.FirstName,
+            request.LastName,
+            request.Title,
+            request.Phone,
+            avatar,
+            user.Id
+        );
 
         await _unitOfWork.UserProfileRepository.CreateAsync(userProfile, cancellationToken);
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return UserProfileViewModel.From(userProfile);
     }

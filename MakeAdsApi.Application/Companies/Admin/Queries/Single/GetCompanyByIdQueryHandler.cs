@@ -22,7 +22,7 @@ public class GetCompanyByIdQueryHandler : IRequestHandler<GetCompanyByIdQuery, E
         CancellationToken cancellationToken
     )
     {
-        var company = await _unitOfWork.CompanyRepository.GetCompanyByIdAsync(request.Id, cancellationToken);
+        var company = await _unitOfWork.CompanyRepository.GetCompanyWithProviderByIdAsync(request.Id, cancellationToken);
 
         if (company == null)
         {

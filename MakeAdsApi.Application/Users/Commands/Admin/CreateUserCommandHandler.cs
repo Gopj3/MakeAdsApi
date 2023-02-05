@@ -31,26 +31,25 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Error
         var existedUser = await _unitOfWork
             .UserRepository
             .GetByExpressionFirstAsync(x => x.Email == command.Email, cancellationToken);
-        
+
         if (existedUser is not null)
         {
             return DomainErrors.User.DuplicateEmail;
         }
-        
+
         var roles = await _unitOfWork.RoleRepository
-                    .GetByExpressionAsync(x => command.RoleIds.Contains(x.Id), cancellationToken);
+            .GetByExpressionAsync(x => command.RoleIds.Contains(x.Id), cancellationToken);
 
         var userId = Guid.NewGuid();
-        var user = new User
-        {
-            Id = userId,
-            Email = command.Email,
-            Password = _passwordHasher.HashPassword(String.Empty),
-            UserRoles = roles.Select(x => UserRole.Create(userId, x)).ToList()
-        };
+        var user = new User(
+            userId,
+            command.Email,
+            _passwordHasher.HashPassword(String.Empty),
+            roles.Select(x => UserRole.Create(userId, x)).ToList()
+        );
 
         await _unitOfWork.UserRepository.CreateAsync(user, cancellationToken);
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return UserViewModel.From(user);
     }

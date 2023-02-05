@@ -9,7 +9,6 @@ using MakeAdsApi.Application.Common.Abstractions.Authentication;
 using MakeAdsApi.Domain.Entities.Users;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using static System.Security.Claims.ClaimsIdentity;
 
 namespace MakeAdsApi.Infrastructure.Common.Authentication
 {

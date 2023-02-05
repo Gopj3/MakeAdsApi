@@ -7,5 +7,5 @@ namespace MakeAdsApi.Application.Common.Abstractions.Repositories;
 
 public interface ICompanyRepository : IGenericRepository<Company>
 {
-    Task<Company?> GetCompanyByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<Company?> GetCompanyWithProviderByIdAsync(Guid id, CancellationToken cancellationToken = default);
 }

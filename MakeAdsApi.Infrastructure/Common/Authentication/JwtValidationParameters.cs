@@ -7,13 +7,6 @@ namespace MakeAdsApi.Infrastructure.Common.Authentication;
 
 public static class JwtValidationParameters
 {
-    public static TokenValidationParameters GetValidationParameters(JwtSettings jwtSettings)
-    {
-        byte[] key = Encoding.ASCII.GetBytes(jwtSettings.Secret);
-
-        return GetParameters(key, jwtSettings.Issuer);
-    }
-
     public static TokenValidationParameters GetValidationParameters(IConfigurationSection section)
     {
         byte[] key = Encoding.ASCII.GetBytes(section["Secret"] ?? string.Empty);

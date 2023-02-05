@@ -20,8 +20,8 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddRouting();
 
     builder.Services.AddApi();
-    builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
+    builder.Services.AddApplication();
     builder.Services.ConfigureJwtBearer(builder.Configuration);
 
     builder.Services.AddDbContext<MakeAdsDbContext>(options =>

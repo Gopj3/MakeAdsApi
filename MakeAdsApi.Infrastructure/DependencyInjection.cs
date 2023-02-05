@@ -1,4 +1,8 @@
+using MakeAdsApi.Application.Common.Abstractions.Helpers;
 using MakeAdsApi.Application.Common.Abstractions.Jobs;
+using MakeAdsApi.Application.Common.Abstractions.Services.RetailDataProviders;
+using MakeAdsApi.Infrastructure.Helpers;
+using MakeAdsApi.Infrastructure.Services.RetailDataProviders;
 
 namespace MakeAdsApi.Infrastructure;
 
@@ -29,6 +33,9 @@ public static class DependencyInjection
         services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
         services.AddSingleton<IAwsS3Service, AwsS3Service>();
         services.AddScoped<IUpdatePreSignedUrlsService, UpdatePreSignedUrlsService>();
+        services.AddHttpClient<IRetailDataProviderHttpService, RetailDataProviderHttpService>();
+        services.AddHttpClient<IFilesHelper, FilesHelper>();
+        
         services.AddHangfire(x => { x.UseSqlServerStorage(builderConfiguration.GetConnectionString("HangFireDb")); });
         services.AddHangfireServer();
     }

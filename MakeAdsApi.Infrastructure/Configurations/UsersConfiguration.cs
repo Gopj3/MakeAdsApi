@@ -21,15 +21,14 @@ public static class UsersConfiguration
         modelBuilder.Entity<User>()
             .HasMany(u => u.UserRoles)
             .WithOne(r => r.User);
-        
+
         modelBuilder.Entity<User>()
-            .HasData(new User
-            {
-                Id = Guid.Parse("49508398-5e83-4ef5-9774-24f8e6f0d4ec"),
-                Email = "admin@admin-nordic.com",
-                Password = (new PasswordHasher<User>()).HashPassword("nordicPass123"),
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-            });
+            .HasData(
+                new User(
+                    Guid.NewGuid(),
+                    "admin@admin-nordic.com",
+                    (new PasswordHasher<User>()).HashPassword("nordicPass123")
+                )
+            );
     }
 }

@@ -13,6 +13,18 @@ public class UserProfile : BaseEntity
     public User User { get; set; }
     public Guid UserId { get; set; }
 
+    public UserProfile(Guid id, string firstName, string lastName, string? title, string? phone,
+        UserProfileAvatar? avatar, Guid userId)
+    {
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        Title = title;
+        Phone = phone;
+        Avatar = avatar;
+        UserId = userId;
+    }
+
     public void Update(
         string firstName,
         string lastName,

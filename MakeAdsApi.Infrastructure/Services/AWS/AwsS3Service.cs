@@ -9,6 +9,7 @@ using Amazon;
 using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.S3.Model;
+using MakeAdsApi.Application.Common.Abstractions.Helpers;
 using MakeAdsApi.Application.Common.Abstractions.Services.AWS;
 using MakeAdsApi.Infrastructure.Common.AWS;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,7 @@ public class AwsS3Service : IAwsS3Service
 {
     private const string S3_ERROR = "Error encountered on server. Message:'{0}' when writing an object";
     private const string UNHANDLED_EXCEPTION = "Error encountered on server. Message:'{0}' when writing an object";
-    
+
     private readonly AwsSettings _awsSettings;
     private readonly IAmazonS3 _s3Client;
     private readonly ILogger<AwsS3Service> _logger;
@@ -37,6 +38,34 @@ public class AwsS3Service : IAwsS3Service
             new BasicAWSCredentials(_awsSettings.Key, _awsSettings.Secret),
             RegionEndpoint.GetBySystemName(_awsSettings.Region)
         );
+    }
+
+    public async Task<bool> WriteObjectAsync(MemoryStream stream, string fileName,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var request = new PutObjectRequest
+            {
+                BucketName = _awsSettings.BucketName,
+                Key = fileName,
+                InputStream = stream
+            };
+
+            await _s3Client.PutObjectAsync(request, cancellationToken);
+
+            return true;
+        }
+        catch (AmazonS3Exception e)
+        {
+            _logger.LogError(e, S3_ERROR, e.Message);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, UNHANDLED_EXCEPTION, e.Message);
+        }
+
+        return false;
     }
 
     public async Task<bool> WriteObjectAsync(IFormFile formFile, CancellationToken cancellationToken = default)

@@ -20,6 +20,17 @@ public sealed class UnitOfWork : IUnitOfWork
     public IOfficeRepository OfficeRepository { get; set; }
     public IBudgetRepository BudgetRepository { get; set; }
     public IBudgetItemRepository BudgetItemRepository { get; set; }
+    public IAdvertiseRepository AdvertiseRepository { get; set; }
+    public IOrderRepository OrderRepository { get; set; }
+    public IBaseCreativeRepository BaseCreativeRepository { get; set; }
+    public ISingleCreativeRepository SingleCreativeRepository { get; set; }
+    public IABCreativeRepository AbCreativeRepository { get; set; }
+    public ICarouselCreativeRepository CarouselCreativeRepository { get; set; }
+    public ICarouselCreativeItemRepository CarouselCreativeItemRepository { get; set; }
+    public IMediaRepository MediaRepository { get; set; }
+    public IAdSetLocationRepository AdSetLocationRepository { get; set; }
+    public IAdSetRepository AdSetRepository { get; set; }
+    public ICampaignRepository CampaignRepository { get; set; }
 
     public UnitOfWork(MakeAdsDbContext context)
     {
@@ -34,6 +45,17 @@ public sealed class UnitOfWork : IUnitOfWork
         OfficeRepository = new OfficeRepository(context);
         BudgetRepository = new BudgetRepository(context);
         BudgetItemRepository = new BudgetItemRepository(context);
+        AdvertiseRepository = new AdvertiseRepository(context);
+        BaseCreativeRepository = new BaseCreativeRepository(context);
+        SingleCreativeRepository = new SingleCreativeRepository(context);
+        AbCreativeRepository = new AbCreativeRepository(context);
+        CarouselCreativeRepository = new CarouselCreativeRepository(context);
+        CarouselCreativeItemRepository = new CarouselCreativeItemRepository(context);
+        MediaRepository = new MediaRepository(context);
+        AdSetLocationRepository = new AdSetLocationRepository(context);
+        AdSetRepository = new AdSetRepository(context);
+        CampaignRepository = new CampaignRepository(context);
+        OrderRepository = new OrderRepository(context);
     }
 
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)

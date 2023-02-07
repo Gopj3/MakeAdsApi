@@ -8,7 +8,7 @@ using MakeAdsApi.Application.Common.Abstractions.Helpers;
 using MakeAdsApi.Application.Common.Abstractions.Services.AWS;
 using Microsoft.AspNetCore.Http;
 
-namespace MakeAdsApi.Infrastructure.Helpers;
+namespace MakeAdsApi.Application.Services.Helpers;
 
 public class FilesHelper : IFilesHelper
 {

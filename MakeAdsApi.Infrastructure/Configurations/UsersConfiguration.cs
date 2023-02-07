@@ -31,5 +31,9 @@ public static class UsersConfiguration
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
             });
+
+        modelBuilder.Entity<User>()
+            .HasMany(x => x.Orders)
+            .WithOne(x => x.User);
     }
 }

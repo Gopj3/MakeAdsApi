@@ -9,7 +9,6 @@ using Amazon;
 using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.S3.Model;
-using MakeAdsApi.Application.Common.Abstractions.Helpers;
 using MakeAdsApi.Application.Common.Abstractions.Services.AWS;
 using MakeAdsApi.Infrastructure.Common.AWS;
 using Microsoft.AspNetCore.Http;

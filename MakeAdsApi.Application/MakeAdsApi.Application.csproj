@@ -44,6 +44,7 @@
       <Folder Include="Roles\Commands" />
       <Folder Include="Statistics\Admin\Commands" />
       <Folder Include="UserProfiles\Admin\Models" />
+      <Folder Include="Users\Models\Dtos" />
       <Folder Include="Users\Queries\Admin" />
     </ItemGroup>
 

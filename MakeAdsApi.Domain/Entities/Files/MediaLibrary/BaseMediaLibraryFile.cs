@@ -9,5 +9,4 @@ public abstract class BaseMediaLibraryFile : File
     [Required] public string RetailPropertyId { get; set; }
     [Required] public Guid UserId { get; set; }
     [Required] public User User { get; set; }
-    public string? ExternalUrl { get; set; }
 }

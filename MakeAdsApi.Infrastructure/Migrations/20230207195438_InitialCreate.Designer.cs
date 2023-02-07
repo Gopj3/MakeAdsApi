@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MakeAdsApi.Infrastructure.Migrations
 {
     [DbContext(typeof(MakeAdsDbContext))]
-    [Migration("20230204112253_InitialCreate")]
+    [Migration("20230207195438_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,294 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.AdSets.AdSet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SocialMediaReferenceId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AdSets", (string)null);
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.AdSets.AdSetLocation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AdSetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Radius")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdSetId");
+
+                    b.ToTable("AdSetsLocations", (string)null);
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Advertise", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AdSetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreativeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InternalStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SocialMediaPlatform")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdSetId")
+                        .IsUnique();
+
+                    b.HasIndex("CampaignId")
+                        .IsUnique();
+
+                    b.HasIndex("CreativeId")
+                        .IsUnique();
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Advertises", (string)null);
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Campaigns.Campaign", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SocialMediaReferenceId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Campaigns", (string)null);
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Creatives.AbCreativeMedia", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AbCreativeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("MediaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AbCreativeId");
+
+                    b.HasIndex("MediaId");
+
+                    b.ToTable("ABCreativesMedia", (string)null);
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Creatives.BaseCreative", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Caption")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Headline")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("SocialMediaReference")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BaseCreatives", (string)null);
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Creatives.CarouselCreativeItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Caption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CarouselCreativeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Headline")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("MediaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarouselCreativeId");
+
+                    b.HasIndex("MediaId");
+
+                    b.ToTable("CarouselCreativeItems", (string)null);
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Medias.Media", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("FileId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FileId")
+                        .IsUnique();
+
+                    b.ToTable("Medias", (string)null);
+                });
 
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Brandings.Branding", b =>
                 {
@@ -287,6 +575,38 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.ToTable("Offices");
                 });
 
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Orders.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsPropertySold")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RetailPropertyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.RetailDataProviders.RetailDataProvider", b =>
                 {
                     b.Property<Guid>("Id")
@@ -530,6 +850,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsPasswordAutomaticGenerated")
+                        .HasColumnType("bit");
+
                     b.Property<Guid?>("OfficeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -550,10 +873,11 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"),
-                            CreatedAt = new DateTime(2023, 2, 4, 11, 22, 52, 789, DateTimeKind.Utc).AddTicks(230),
+                            CreatedAt = new DateTime(2023, 2, 7, 19, 54, 37, 834, DateTimeKind.Utc).AddTicks(6170),
                             Email = "admin@admin-nordic.com",
-                            Password = "$2a$12$wq2WLhF1/7aAHDRwD9hjn.cf8l3Q1Q5dhJO8u.w6mzqrUfEi7XWNG",
-                            UpdatedAt = new DateTime(2023, 2, 4, 11, 22, 52, 789, DateTimeKind.Utc).AddTicks(320)
+                            IsPasswordAutomaticGenerated = false,
+                            Password = "$2a$12$EH/9dmZtETZJElr1fPUhpOsy5uuZpPk0I9K.wN1hVG/pza.TmkRdW",
+                            UpdatedAt = new DateTime(2023, 2, 7, 19, 54, 37, 834, DateTimeKind.Utc).AddTicks(6280)
                         });
                 });
 
@@ -637,12 +961,35 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Creatives.ABCreative", b =>
+                {
+                    b.HasBaseType("MakeAdsApi.Domain.Entities.Ads.Creatives.BaseCreative");
+
+                    b.ToTable("ABCreatives", (string)null);
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Creatives.CarouselCreative", b =>
+                {
+                    b.HasBaseType("MakeAdsApi.Domain.Entities.Ads.Creatives.BaseCreative");
+
+                    b.ToTable("CarouselCreatives", (string)null);
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Creatives.SingleCreative", b =>
+                {
+                    b.HasBaseType("MakeAdsApi.Domain.Entities.Ads.Creatives.BaseCreative");
+
+                    b.Property<Guid>("MediaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("MediaId");
+
+                    b.ToTable("SingleCreatives", (string)null);
+                });
+
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Files.MediaLibrary.BaseMediaLibraryFile", b =>
                 {
                     b.HasBaseType("MakeAdsApi.Domain.Entities.Files.File");
-
-                    b.Property<string>("ExternalUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RetailPropertyId")
                         .IsRequired()
@@ -674,6 +1021,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 {
                     b.HasBaseType("MakeAdsApi.Domain.Entities.Files.MediaLibrary.BaseMediaLibraryFile");
 
+                    b.Property<string>("ExternalUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.ToTable("MediaLibraryImages", (string)null);
                 });
 
@@ -688,6 +1038,101 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("MediaLibraryVideos", (string)null);
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.AdSets.AdSetLocation", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Ads.AdSets.AdSet", "AdSet")
+                        .WithMany("AdSetLocations")
+                        .HasForeignKey("AdSetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AdSet");
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Advertise", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Ads.AdSets.AdSet", "AdSet")
+                        .WithOne()
+                        .HasForeignKey("MakeAdsApi.Domain.Entities.Ads.Advertise", "AdSetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MakeAdsApi.Domain.Entities.Ads.Campaigns.Campaign", "Campaign")
+                        .WithOne()
+                        .HasForeignKey("MakeAdsApi.Domain.Entities.Ads.Advertise", "CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MakeAdsApi.Domain.Entities.Ads.Creatives.BaseCreative", "Creative")
+                        .WithOne()
+                        .HasForeignKey("MakeAdsApi.Domain.Entities.Ads.Advertise", "CreativeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MakeAdsApi.Domain.Entities.Orders.Order", "Order")
+                        .WithMany("Advertises")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AdSet");
+
+                    b.Navigation("Campaign");
+
+                    b.Navigation("Creative");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Creatives.AbCreativeMedia", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Ads.Creatives.ABCreative", "AbCreative")
+                        .WithMany("AbCreativeMedias")
+                        .HasForeignKey("AbCreativeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MakeAdsApi.Domain.Entities.Ads.Medias.Media", "Media")
+                        .WithMany()
+                        .HasForeignKey("MediaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AbCreative");
+
+                    b.Navigation("Media");
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Creatives.CarouselCreativeItem", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Ads.Creatives.CarouselCreative", "CarouselCreative")
+                        .WithMany("Items")
+                        .HasForeignKey("CarouselCreativeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MakeAdsApi.Domain.Entities.Ads.Medias.Media", "Media")
+                        .WithMany()
+                        .HasForeignKey("MediaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CarouselCreative");
+
+                    b.Navigation("Media");
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Medias.Media", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Files.File", "File")
+                        .WithOne()
+                        .HasForeignKey("MakeAdsApi.Domain.Entities.Ads.Medias.Media", "FileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("File");
                 });
 
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Budgets.Budget", b =>
@@ -755,6 +1200,17 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Navigation("Branding");
 
                     b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Orders.Order", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Users.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.SocialMedias.DeltaMediaConfig", b =>
@@ -840,6 +1296,41 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Creatives.ABCreative", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Ads.Creatives.BaseCreative", null)
+                        .WithOne()
+                        .HasForeignKey("MakeAdsApi.Domain.Entities.Ads.Creatives.ABCreative", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Creatives.CarouselCreative", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Ads.Creatives.BaseCreative", null)
+                        .WithOne()
+                        .HasForeignKey("MakeAdsApi.Domain.Entities.Ads.Creatives.CarouselCreative", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Creatives.SingleCreative", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Ads.Creatives.BaseCreative", null)
+                        .WithOne()
+                        .HasForeignKey("MakeAdsApi.Domain.Entities.Ads.Creatives.SingleCreative", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("MakeAdsApi.Domain.Entities.Ads.Medias.Media", "Media")
+                        .WithMany()
+                        .HasForeignKey("MediaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Media");
+                });
+
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Files.MediaLibrary.BaseMediaLibraryFile", b =>
                 {
                     b.HasOne("MakeAdsApi.Domain.Entities.Files.File", null)
@@ -892,6 +1383,11 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.AdSets.AdSet", b =>
+                {
+                    b.Navigation("AdSetLocations");
+                });
+
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Budgets.Budget", b =>
                 {
                     b.Navigation("BudgetItems");
@@ -917,6 +1413,11 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Navigation("Users");
                 });
 
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Orders.Order", b =>
+                {
+                    b.Navigation("Advertises");
+                });
+
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.RetailDataProviders.RetailDataProvider", b =>
                 {
                     b.Navigation("Companies");
@@ -934,6 +1435,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
 
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Users.User", b =>
                 {
+                    b.Navigation("Orders");
+
                     b.Navigation("Profile");
 
                     b.Navigation("UserRoles");
@@ -942,6 +1445,16 @@ namespace MakeAdsApi.Infrastructure.Migrations
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Users.UserProfile", b =>
                 {
                     b.Navigation("Avatar");
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Creatives.ABCreative", b =>
+                {
+                    b.Navigation("AbCreativeMedias");
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Creatives.CarouselCreative", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,10 +1,16 @@
 using System.Threading;
 using System.Threading.Tasks;
+using MakeAdsApi.Domain.Entities.Ads;
+using MakeAdsApi.Domain.Entities.Ads.AdSets;
+using MakeAdsApi.Domain.Entities.Ads.Campaigns;
+using MakeAdsApi.Domain.Entities.Ads.Creatives;
+using MakeAdsApi.Domain.Entities.Ads.Medias;
 using MakeAdsApi.Domain.Entities.Budgets;
 using MakeAdsApi.Domain.Entities.Companies;
 using MakeAdsApi.Domain.Entities.Files;
 using MakeAdsApi.Domain.Entities.Files.MediaLibrary;
 using MakeAdsApi.Domain.Entities.Offices;
+using MakeAdsApi.Domain.Entities.Orders;
 using MakeAdsApi.Domain.Entities.Users;
 using MakeAdsApi.Domain.Entities.RetailDataProviders;
 using MakeAdsApi.Domain.Entities.SocialMedias;
@@ -38,7 +44,18 @@ public class MakeAdsDbContext : DbContext
     public DbSet<UserProfileAvatar> UserProfileAvatars { get; set; }
     public DbSet<Budget> Budgets { get; set; }
     public DbSet<BudgetItem> BudgetItems { get; set; }
-    
+    public DbSet<BaseCreative> BaseCreatives { get; set; }
+    public DbSet<SingleCreative> SingleCreatives { get; set; }
+    public DbSet<ABCreative> AbCreatives { get; set; }
+    public DbSet<CarouselCreative> CarouselCreatives { get; set; }
+    public DbSet<CarouselCreativeItem> ACarouselCreativeItems { get; set; }
+    public DbSet<Media> Medias { get; set; }
+    public DbSet<Campaign> Campaigns { get; set; }
+    public DbSet<AdSet> AdSets { get; set; }
+    public DbSet<AdSetLocation> AdSetLocations { get; set; }
+    public DbSet<Advertise> Advertises { get; set; }
+    public DbSet<Order> Orders { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ConfigureRole();
@@ -52,6 +69,11 @@ public class MakeAdsDbContext : DbContext
         modelBuilder.ConfigureRetailDataProviders();
         modelBuilder.ConfigureBudgets();
         modelBuilder.ConfigureBudgetItems();
+        modelBuilder.ConfigureCreatives();
+        modelBuilder.ConfigureMedias();
+        modelBuilder.ConfigureCampaigns();
+        modelBuilder.ConfigureAdSets();
+        modelBuilder.ConfigureAdvertises();
 
         base.OnModelCreating(modelBuilder);
     }

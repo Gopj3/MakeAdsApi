@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading;
@@ -23,8 +24,15 @@ public class RetailDataProviderHttpService : IRetailDataProviderHttpService
         CancellationToken cancellationToken = default
     )
     {
-        return await _httpClient.GetFromJsonAsync<RetailDataPropertyApiResponse>(
-            $"{url}/{externalCompanyId}-{propertyId}", cancellationToken
-        );
+        try
+        {
+            return await _httpClient.GetFromJsonAsync<RetailDataPropertyApiResponse>(
+                $"{url}/{externalCompanyId}-{propertyId}", cancellationToken
+            );
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 }

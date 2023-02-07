@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ErrorOr;
 using MakeAdsApi.Application.Common.Abstractions.Authentication;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
+using MakeAdsApi.Application.Services.Helpers;
 using MakeAdsApi.Application.Users.Models.Responses;
 using MakeAdsApi.Domain.Entities.Users;
 using MakeAdsApi.Domain.Errors;
@@ -44,7 +45,8 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Error
         var user = new User {
             Id = userId,
             Email = command.Email,
-            Password = _passwordHasher.HashPassword(String.Empty),
+            Password = _passwordHasher.HashPassword(StringsHelper.RandomString(10)),
+            IsPasswordAutomaticGenerated = true,
             UserRoles = roles.Select(x => UserRole.Create(userId, x)).ToList()
         };
 

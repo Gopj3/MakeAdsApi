@@ -1,9 +1,10 @@
+using MakeAdsApi.Application.Services.Helpers;
+
 namespace MakeAdsApi.Infrastructure;
 
 using MakeAdsApi.Application.Common.Abstractions.Helpers;
 using MakeAdsApi.Application.Common.Abstractions.Jobs;
 using MakeAdsApi.Application.Common.Abstractions.Services.RetailDataProviders;
-using Helpers;
 using Services.RetailDataProviders;
 using Hangfire;
 using MakeAdsApi.Application.Common.Abstractions.Services.AWS;

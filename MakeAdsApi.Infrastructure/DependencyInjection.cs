@@ -31,6 +31,7 @@ public static class DependencyInjection
         services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
         services.AddSingleton<IAwsS3Service, AwsS3Service>();
         services.AddScoped<IUpdatePreSignedUrlsService, UpdatePreSignedUrlsService>();
+        services.AddScoped<IPropertyImagesSynchronizationService, PropertyImagesSynchronizationService>();
         services.AddHttpClient<IRetailDataProviderHttpService, RetailDataProviderHttpService>();
         services.AddHttpClient<IFilesHelper, FilesHelper>();
         services.AddScoped<IFilesHelper, FilesHelper>();

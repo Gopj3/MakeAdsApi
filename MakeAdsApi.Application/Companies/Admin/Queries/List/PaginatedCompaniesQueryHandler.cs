@@ -1,8 +1,11 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using ErrorOr;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
 using MakeAdsApi.Application.Common.ViewModels;
@@ -15,10 +18,12 @@ namespace MakeAdsApi.Application.Companies.Admin.Queries.List;
 public class PaginatedCompaniesQueryHandler: IRequestHandler<PaginatedCompaniesQuery, ErrorOr<BaseViewListModel<CompanyViewModel>>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public PaginatedCompaniesQueryHandler(IUnitOfWork unitOfWork)
+    public PaginatedCompaniesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<ErrorOr<BaseViewListModel<CompanyViewModel>>> Handle(PaginatedCompaniesQuery request, CancellationToken cancellationToken)
@@ -34,7 +39,7 @@ public class PaginatedCompaniesQueryHandler: IRequestHandler<PaginatedCompaniesQ
 
         return new BaseViewListModel<CompanyViewModel>
         {
-            Items = companies.Select(CompanyViewModel.From),
+            Items = _mapper.Map<List<CompanyViewModel>>(companies),
             TotalCount = companies.TotalCount,
             Page = companies.CurrentPage,
             PageSize = companies.PageSize,

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MakeAdsApi.Infrastructure.Migrations
 {
     [DbContext(typeof(MakeAdsDbContext))]
-    [Migration("20230207195438_InitialCreate")]
+    [Migration("20230301213109_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,11 +30,18 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("BudgetId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("SocialMediaPlatform")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SocialMediaReferenceId")
                         .IsRequired()
@@ -42,12 +49,14 @@ namespace MakeAdsApi.Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BudgetId");
 
                     b.ToTable("AdSets", (string)null);
                 });
@@ -122,6 +131,10 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -155,6 +168,10 @@ namespace MakeAdsApi.Infrastructure.Migrations
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("SocialMediaPlatform")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SocialMediaReferenceId")
                         .IsRequired()
@@ -228,6 +245,10 @@ namespace MakeAdsApi.Infrastructure.Migrations
 
                     b.Property<string>("Link")
                         .HasColumnType("varchar(255)");
+
+                    b.Property<string>("SocialMediaPlatform")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SocialMediaReference")
                         .HasColumnType("varchar(255)");
@@ -587,12 +608,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsPropertySold")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("RetailPropertyId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("PropertyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -602,9 +619,75 @@ namespace MakeAdsApi.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PropertyId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Properties.Property", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsSold")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PropertyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PropertyId")
+                        .IsUnique();
+
+                    b.ToTable("Properties", (string)null);
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Properties.PropertyUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PropertyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PropertyId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PropertiesUsers", (string)null);
                 });
 
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.RetailDataProviders.RetailDataProvider", b =>
@@ -848,7 +931,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsPasswordAutomaticGenerated")
                         .HasColumnType("bit");
@@ -865,19 +948,22 @@ namespace MakeAdsApi.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.HasIndex("OfficeId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"),
-                            CreatedAt = new DateTime(2023, 2, 7, 19, 54, 37, 834, DateTimeKind.Utc).AddTicks(6170),
+                            CreatedAt = new DateTime(2023, 3, 1, 21, 31, 8, 623, DateTimeKind.Utc).AddTicks(1120),
                             Email = "admin@admin-nordic.com",
                             IsPasswordAutomaticGenerated = false,
-                            Password = "$2a$12$EH/9dmZtETZJElr1fPUhpOsy5uuZpPk0I9K.wN1hVG/pza.TmkRdW",
-                            UpdatedAt = new DateTime(2023, 2, 7, 19, 54, 37, 834, DateTimeKind.Utc).AddTicks(6280)
+                            Password = "$2a$12$om3ER191YcrlGARiKN.8ner7IntdgVQdqk9j7VV/FQ7JTmqUHsr/.",
+                            UpdatedAt = new DateTime(2023, 3, 1, 21, 31, 8, 623, DateTimeKind.Utc).AddTicks(1220)
                         });
                 });
 
@@ -991,12 +1077,13 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 {
                     b.HasBaseType("MakeAdsApi.Domain.Entities.Files.File");
 
-                    b.Property<string>("RetailPropertyId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("PropertyId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("PropertyId");
 
                     b.HasIndex("UserId");
 
@@ -1040,6 +1127,17 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.ToTable("MediaLibraryVideos", (string)null);
                 });
 
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.AdSets.AdSet", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Budgets.Budget", "Budget")
+                        .WithMany()
+                        .HasForeignKey("BudgetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Budget");
+                });
+
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.AdSets.AdSetLocation", b =>
                 {
                     b.HasOne("MakeAdsApi.Domain.Entities.Ads.AdSets.AdSet", "AdSet")
@@ -1066,7 +1164,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("MakeAdsApi.Domain.Entities.Ads.Creatives.BaseCreative", "Creative")
-                        .WithOne()
+                        .WithOne("Advertise")
                         .HasForeignKey("MakeAdsApi.Domain.Entities.Ads.Advertise", "CreativeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1204,11 +1302,38 @@ namespace MakeAdsApi.Infrastructure.Migrations
 
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Orders.Order", b =>
                 {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Properties.Property", "Property")
+                        .WithMany("Orders")
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MakeAdsApi.Domain.Entities.Users.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Property");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Properties.PropertyUser", b =>
+                {
+                    b.HasOne("MakeAdsApi.Domain.Entities.Properties.Property", "Property")
+                        .WithMany("Users")
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MakeAdsApi.Domain.Entities.Users.User", "User")
+                        .WithMany("Properties")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Property");
 
                     b.Navigation("User");
                 });
@@ -1339,11 +1464,17 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.HasOne("MakeAdsApi.Domain.Entities.Users.User", "User")
+                    b.HasOne("MakeAdsApi.Domain.Entities.Properties.Property", "Property")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("PropertyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("MakeAdsApi.Domain.Entities.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Property");
 
                     b.Navigation("User");
                 });
@@ -1388,6 +1519,11 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Navigation("AdSetLocations");
                 });
 
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Ads.Creatives.BaseCreative", b =>
+                {
+                    b.Navigation("Advertise");
+                });
+
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.Budgets.Budget", b =>
                 {
                     b.Navigation("BudgetItems");
@@ -1418,6 +1554,13 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Navigation("Advertises");
                 });
 
+            modelBuilder.Entity("MakeAdsApi.Domain.Entities.Properties.Property", b =>
+                {
+                    b.Navigation("Orders");
+
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("MakeAdsApi.Domain.Entities.RetailDataProviders.RetailDataProvider", b =>
                 {
                     b.Navigation("Companies");
@@ -1438,6 +1581,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Profile");
+
+                    b.Navigation("Properties");
 
                     b.Navigation("UserRoles");
                 });

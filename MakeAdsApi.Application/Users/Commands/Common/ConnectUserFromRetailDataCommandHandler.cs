@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using ErrorOr;
@@ -8,6 +7,8 @@ using MakeAdsApi.Application.Common.Abstractions.Repositories;
 using MakeAdsApi.Application.Common.Abstractions.Services.RetailDataProviders;
 using MakeAdsApi.Application.Common.Abstractions.Services.Users;
 using MakeAdsApi.Application.Exceptions;
+using MakeAdsApi.Application.RetailProviders.Common.Models;
+using MakeAdsApi.Domain.Entities.Companies;
 using MakeAdsApi.Domain.Errors;
 using MediatR;
 
@@ -26,7 +27,7 @@ public class ConnectUserFromRetailDataCommandHandler
         IRetailDataProviderHttpService retailDataProviderHttpService,
         IUsersAutoCreateService usersAutoCreateService,
         IJwtTokenGenerator jwtTokenGenerator
-    )
+        )
     {
         _unitOfWork = unitOfWork;
         _retailDataProviderHttpService = retailDataProviderHttpService;
@@ -47,13 +48,13 @@ public class ConnectUserFromRetailDataCommandHandler
             return DomainErrors.Company.NotFound;
         }
 
-        if (company.RetailDataProvider.UpdatePropertyDataUrl is null)
+        if (company.RetailDataProvider.FetchPropertyDataUrl is null)
         {
             return DomainErrors.RetailDataProvider.NotFound;
         }
 
         var apiResponse = await _retailDataProviderHttpService.GetRetailPropertyDataAsync(
-            company.RetailDataProvider.UpdatePropertyDataUrl,
+            company.RetailDataProvider.FetchPropertyDataUrl,
             company.ExternalId,
             request.PropertyId,
             cancellationToken
@@ -61,7 +62,16 @@ public class ConnectUserFromRetailDataCommandHandler
 
         if (apiResponse is null) throw new RetailDataProviderException("No response from retail data provider");
 
-        var user = await _unitOfWork.UserRepository.GetByExpressionFirstAsync(
+        return await FindOrCreateUserWithAuthenticationAsync(apiResponse, company, cancellationToken);
+    }
+
+    private async Task<AuthenticationResult> FindOrCreateUserWithAuthenticationAsync(
+        RetailDataPropertyApiResponse apiResponse,
+        Company company,
+        CancellationToken cancellationToken
+    )
+    {
+        var user = await _unitOfWork.UserRepository.GetByExpressionWithRolesAsync(
             x => x.Email == apiResponse.EmployeeEmail,
             cancellationToken
         );

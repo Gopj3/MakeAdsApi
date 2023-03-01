@@ -8,8 +8,9 @@ using MakeAdsApi.Domain.Enums.Ads;
 
 namespace MakeAdsApi.Domain.Entities.Ads;
 
-public class Advertise: BaseEntity
+public class Advertise : BaseEntity
 {
+    public string Title { get; set; }
     public Guid CreativeId { get; set; }
     public BaseCreative Creative { get; set; }
     public Guid AdSetId { get; set; }

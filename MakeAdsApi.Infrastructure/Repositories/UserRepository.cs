@@ -29,13 +29,22 @@ public class UserRepository : GenericRepository<User>, IUserRepository
             .FirstOrDefaultAsync(filter!, cancellationToken);
     }
     
-    public async Task<User?> GetWithProfileById(Guid id, CancellationToken cancellationToken = default)
+    public async Task<User?> GetWithProfileByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await Context
             .Users
             .Include(x => x.Profile)
             .ThenInclude(x => x.Avatar)
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+    }
+
+    public async Task<User?> GetWithOfficeAndCompanyByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await Context
+            .Users
+            .Include(x => x.Office)
+            .ThenInclude(x => x.Company)
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);    
     }
 
     public async Task<PagedList<User>> GetPaginatedWithSearchAsync(int page, int pageSize, string? search = null,

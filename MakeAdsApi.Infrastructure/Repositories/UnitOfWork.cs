@@ -31,6 +31,8 @@ public sealed class UnitOfWork : IUnitOfWork
     public IAdSetLocationRepository AdSetLocationRepository { get; set; }
     public IAdSetRepository AdSetRepository { get; set; }
     public ICampaignRepository CampaignRepository { get; set; }
+    public IPropertyRepository PropertyRepository { get; set; }
+    public IMediaLibraryImageRepository MediaLibraryImageRepository { get; set; }
 
     public UnitOfWork(MakeAdsDbContext context)
     {
@@ -56,6 +58,8 @@ public sealed class UnitOfWork : IUnitOfWork
         AdSetRepository = new AdSetRepository(context);
         CampaignRepository = new CampaignRepository(context);
         OrderRepository = new OrderRepository(context);
+        PropertyRepository = new PropertyRepository(context);
+        MediaLibraryImageRepository = new MediaLibraryImageRepository(context);
     }
 
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)

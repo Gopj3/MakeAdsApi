@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using ErrorOr;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
 using MakeAdsApi.Application.RetailProviders.Admin.Models;
@@ -13,10 +14,12 @@ public class CreateRetailDataProviderCommandHandler :
     IRequestHandler<CreateRetailDataProviderCommand, ErrorOr<RetailDataProviderViewModel>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public CreateRetailDataProviderCommandHandler(IUnitOfWork unitOfWork)
+    public CreateRetailDataProviderCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<ErrorOr<RetailDataProviderViewModel>> Handle(
@@ -36,6 +39,6 @@ public class CreateRetailDataProviderCommandHandler :
         await _unitOfWork.RetailDataProviderRepository.CreateAsync(retailProvider, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return RetailDataProviderViewModel.From(retailProvider);
+        return _mapper.Map<RetailDataProviderViewModel>(retailProvider);
     }
 }

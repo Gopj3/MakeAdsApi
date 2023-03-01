@@ -41,7 +41,7 @@ public class UpdatePreSignedUrlsService: IUpdatePreSignedUrlsService
                 _unitOfWork.FileRepository.Update(file);
             });
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }

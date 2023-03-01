@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using ErrorOr;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
 using MakeAdsApi.Application.RetailProviders.Admin.Models;
@@ -12,10 +13,12 @@ public class SingleRetailDataProviderQueryHandler
     : IRequestHandler<SingleRetailDataProviderByIdQuery, ErrorOr<RetailDataProviderViewModel>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public SingleRetailDataProviderQueryHandler(IUnitOfWork unitOfWork)
+    public SingleRetailDataProviderQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<ErrorOr<RetailDataProviderViewModel>> Handle(
@@ -31,6 +34,6 @@ public class SingleRetailDataProviderQueryHandler
             return DomainErrors.RetailDataProvider.NotFound;
         }
 
-        return RetailDataProviderViewModel.From(provider);
+        return _mapper.Map<RetailDataProviderViewModel>(provider);
     }
 }

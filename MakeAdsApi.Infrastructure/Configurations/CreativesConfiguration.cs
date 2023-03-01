@@ -1,4 +1,5 @@
 using MakeAdsApi.Domain.Entities.Ads.Creatives;
+using MakeAdsApi.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace MakeAdsApi.Infrastructure.Configurations;
@@ -19,6 +20,13 @@ public static class CreativesConfiguration
         modelBuilder.Entity<BaseCreative>().Property(x => x.Caption).HasColumnType("varchar(255)");
         modelBuilder.Entity<BaseCreative>().Property(x => x.Link).HasColumnType("varchar(255)");
         modelBuilder.Entity<BaseCreative>().Property(x => x.SocialMediaReference).HasColumnType("varchar(255)");
+        modelBuilder.Entity<BaseCreative>().Property(x => x.SocialMediaPlatform).IsRequired();
+        modelBuilder.Entity<BaseCreative>()
+            .Property(x => x.SocialMediaPlatform)
+            .HasConversion(
+                x => x.Value,
+                x => AvailableSocialMedias.FromValue(x)
+            );
 
         modelBuilder.Entity<SingleCreative>().HasOne(x => x.Media).WithMany();
         modelBuilder.Entity<ABCreative>()
@@ -32,5 +40,7 @@ public static class CreativesConfiguration
         modelBuilder.Entity<CarouselCreativeItem>()
             .HasOne(x => x.Media)
             .WithMany();
+        
+        
     }
 }

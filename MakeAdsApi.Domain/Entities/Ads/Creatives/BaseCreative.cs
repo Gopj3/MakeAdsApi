@@ -1,3 +1,5 @@
+using MakeAdsApi.Domain.Enums;
+
 namespace MakeAdsApi.Domain.Entities.Ads.Creatives;
 
 public abstract class BaseCreative: BaseEntity
@@ -8,4 +10,6 @@ public abstract class BaseCreative: BaseEntity
     public string? Description { get; set; }
     public string? Caption { get; set; }
     public string? SocialMediaReference { get; set; }
+    public AvailableSocialMedias SocialMediaPlatform { get; set; }
+    public Advertise? Advertise { get; set; }
 }

@@ -17,5 +17,6 @@ public static class DependencyInjection
         services.AddScoped<IUsersAutoCreateService, UsersAutoCreateService>();
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
         services.AddMediatR(typeof(DependencyInjection).Assembly);
+        services.AddAutoMapper(typeof(DependencyInjection).Assembly);
     }
 }

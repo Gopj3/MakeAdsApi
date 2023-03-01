@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ErrorOr;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
 using MakeAdsApi.Application.Common.Abstractions.Services.AWS;
+using MakeAdsApi.Application.Enums;
 using MakeAdsApi.Application.UserProfiles.Shared.Models;
 using MakeAdsApi.Domain.Entities.Files;
 using MakeAdsApi.Domain.Entities.Users;
@@ -28,7 +29,7 @@ public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfile
         CancellationToken cancellationToken
     )
     {
-        var user = await _unitOfWork.UserRepository.GetWithProfileById(request.UserId, cancellationToken);
+        var user = await _unitOfWork.UserRepository.GetWithProfileByIdAsync(request.UserId, cancellationToken);
 
         if (user is null)
         {
@@ -74,7 +75,7 @@ public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfile
             await _awsS3Service.DeleteFileByFileNameAsync(user.Profile.Avatar.FileName);
         }
 
-        var success = await _awsS3Service.WriteObjectAsync(request.Avatar!, cancellationToken);
+        var success = await _awsS3Service.WriteObjectAsync(request.Avatar!, Folders.Avatars, cancellationToken);
 
         if (success)
         {

@@ -7,16 +7,20 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="12.0.1" />
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
       <PackageReference Include="AWSSDK.Core" Version="3.7.103.17" />
       <PackageReference Include="AWSSDK.S3" Version="3.7.101.55" />
       <PackageReference Include="ErrorOr" Version="1.2.1" />
       <PackageReference Include="FluentValidation" Version="11.4.0" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.4.0" />
+      <PackageReference Include="Hangfire.Core" Version="1.7.32" />
       <PackageReference Include="MediatR" Version="11.1.0" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.12" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+      <PackageReference Include="Microsoft.VisualStudio.Threading" Version="17.5.22" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     </ItemGroup>
 
@@ -41,6 +45,10 @@
       <Folder Include="BudgetItems\Admin\Models" />
       <Folder Include="Budgets\Shared\Commands" />
       <Folder Include="Budgets\Shared\Queries\Lists" />
+      <Folder Include="Common\Abstractions\Events" />
+      <Folder Include="MediaLibraryFiles\Customers\Commands" />
+      <Folder Include="Properties\Queries" />
+      <Folder Include="RetailProviders\User\Commands" />
       <Folder Include="Roles\Commands" />
       <Folder Include="Statistics\Admin\Commands" />
       <Folder Include="UserProfiles\Admin\Models" />

@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using ErrorOr;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
 using MakeAdsApi.Application.Common.ViewModels;
@@ -16,10 +18,12 @@ public class GetPaginatedProviderQueryHandler
     : IRequestHandler<GetPaginatedProviderQuery, ErrorOr<BaseViewListModel<RetailDataProviderViewModel>>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public GetPaginatedProviderQueryHandler(IUnitOfWork unitOfWork)
+    public GetPaginatedProviderQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<ErrorOr<BaseViewListModel<RetailDataProviderViewModel>>> Handle(
@@ -39,7 +43,7 @@ public class GetPaginatedProviderQueryHandler
 
         return new BaseViewListModel<RetailDataProviderViewModel>
         {
-            Items = retailDataProviders.Select(RetailDataProviderViewModel.From),
+            Items = _mapper.Map<List<RetailDataProviderViewModel>>(retailDataProviders),
             TotalCount = retailDataProviders.TotalCount,
             Page = retailDataProviders.CurrentPage,
             PageSize = retailDataProviders.PageSize,

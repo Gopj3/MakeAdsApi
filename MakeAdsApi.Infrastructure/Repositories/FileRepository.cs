@@ -21,6 +21,7 @@ public class FileRepository : GenericRepository<File>, IFileRepository
                 x => x.PreSignedUrl != null
                      && x.PreSignedUrlCreatedAt != null
                      && x.PreSignedUrlCreatedAt.Value.AddDays(6) < DateTime.UtcNow)
+            .OrderByDescending(x => x.CreatedAt)
             .ToListAsync(cancellationToken: cancellationToken);
     }
 }

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ErrorOr;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
 using MakeAdsApi.Application.Common.Abstractions.Services.AWS;
+using MakeAdsApi.Application.Enums;
 using MakeAdsApi.Application.UserProfiles.Shared.Models;
 using MakeAdsApi.Domain.Entities.Files;
 using MakeAdsApi.Domain.Entities.Users;
@@ -37,7 +38,7 @@ public class CreateUserProfileCommandHandler : IRequestHandler<CreateUserProfile
 
         if (request.Avatar is not null)
         {
-            if (await _s3Service.WriteObjectAsync(request.Avatar, cancellationToken))
+            if (await _s3Service.WriteObjectAsync(request.Avatar, Folders.Avatars, cancellationToken))
             {
                 preSignedUrl = _s3Service.GetPreSignedUrl(request!.Avatar.FileName);
             }

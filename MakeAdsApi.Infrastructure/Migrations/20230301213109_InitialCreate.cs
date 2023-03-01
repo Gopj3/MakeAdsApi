@@ -10,22 +10,6 @@ namespace MakeAdsApi.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AdSets",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SocialMediaReferenceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AdSets", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "BaseCreatives",
                 columns: table => new
                 {
@@ -36,6 +20,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     Description = table.Column<string>(type: "text", nullable: true),
                     Caption = table.Column<string>(type: "varchar(255)", nullable: true),
                     SocialMediaReference = table.Column<string>(type: "varchar(255)", nullable: true),
+                    SocialMediaPlatform = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -71,6 +56,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SocialMediaReferenceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SocialMediaPlatform = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -96,6 +82,23 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Files", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Properties",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PropertyId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsSold = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Properties", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,31 +133,6 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AdSetsLocations",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Longitude = table.Column<double>(type: "float", nullable: false),
-                    Latitude = table.Column<double>(type: "float", nullable: false),
-                    Radius = table.Column<int>(type: "int", nullable: false),
-                    AdSetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AdSetsLocations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AdSetsLocations_AdSets_AdSetId",
-                        column: x => x.AdSetId,
-                        principalTable: "AdSets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -403,6 +381,30 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AdSets",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "varchar(255)", nullable: false),
+                    SocialMediaReferenceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SocialMediaPlatform = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BudgetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AdSets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AdSets_Budgets_BudgetId",
+                        column: x => x.BudgetId,
+                        principalTable: "Budgets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BudgetItems",
                 columns: table => new
                 {
@@ -503,7 +505,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsPasswordAutomaticGenerated = table.Column<bool>(type: "bit", nullable: false),
                     OfficeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -519,6 +521,31 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         column: x => x.OfficeId,
                         principalTable: "Offices",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AdSetsLocations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Longitude = table.Column<double>(type: "float", nullable: false),
+                    Latitude = table.Column<double>(type: "float", nullable: false),
+                    Radius = table.Column<int>(type: "int", nullable: false),
+                    AdSetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AdSetsLocations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AdSetsLocations_AdSets_AdSetId",
+                        column: x => x.AdSetId,
+                        principalTable: "AdSets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -549,8 +576,8 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RetailPropertyId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    PropertyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -561,11 +588,16 @@ namespace MakeAdsApi.Infrastructure.Migrations
                         principalTable: "Files",
                         principalColumn: "Id");
                     table.ForeignKey(
+                        name: "FK_BaseMediaLibraryFiles_Properties_PropertyId",
+                        column: x => x.PropertyId,
+                        principalTable: "Properties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_BaseMediaLibraryFiles_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -574,8 +606,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RetailPropertyId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsPropertySold = table.Column<bool>(type: "bit", nullable: false),
+                    PropertyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -584,7 +615,41 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Orders_Properties_PropertyId",
+                        column: x => x.PropertyId,
+                        principalTable: "Properties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Orders_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PropertiesUsers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PropertyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PropertiesUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PropertiesUsers_Properties_PropertyId",
+                        column: x => x.PropertyId,
+                        principalTable: "Properties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PropertiesUsers_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -684,6 +749,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreativeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AdSetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CampaignId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -759,7 +825,7 @@ namespace MakeAdsApi.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedAt", "DeletedAt", "Email", "IsPasswordAutomaticGenerated", "OfficeId", "Password", "UpdatedAt" },
-                values: new object[] { new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(2023, 2, 7, 19, 54, 37, 834, DateTimeKind.Utc).AddTicks(6170), null, "admin@admin-nordic.com", false, null, "$2a$12$EH/9dmZtETZJElr1fPUhpOsy5uuZpPk0I9K.wN1hVG/pza.TmkRdW", new DateTime(2023, 2, 7, 19, 54, 37, 834, DateTimeKind.Utc).AddTicks(6280) });
+                values: new object[] { new Guid("49508398-5e83-4ef5-9774-24f8e6f0d4ec"), new DateTime(2023, 3, 1, 21, 31, 8, 623, DateTimeKind.Utc).AddTicks(1120), null, "admin@admin-nordic.com", false, null, "$2a$12$om3ER191YcrlGARiKN.8ner7IntdgVQdqk9j7VV/FQ7JTmqUHsr/.", new DateTime(2023, 3, 1, 21, 31, 8, 623, DateTimeKind.Utc).AddTicks(1220) });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
@@ -775,6 +841,11 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 name: "IX_ABCreativesMedia_MediaId",
                 table: "ABCreativesMedia",
                 column: "MediaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AdSets_BudgetId",
+                table: "AdSets",
+                column: "BudgetId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AdSetsLocations_AdSetId",
@@ -803,6 +874,11 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 name: "IX_Advertises_OrderId",
                 table: "Advertises",
                 column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BaseMediaLibraryFiles_PropertyId",
+                table: "BaseMediaLibraryFiles",
+                column: "PropertyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BaseMediaLibraryFiles_UserId",
@@ -882,8 +958,29 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_PropertyId",
+                table: "Orders",
+                column: "PropertyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserId",
                 table: "Orders",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Properties_PropertyId",
+                table: "Properties",
+                column: "PropertyId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertiesUsers_PropertyId",
+                table: "PropertiesUsers",
+                column: "PropertyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertiesUsers_UserId",
+                table: "PropertiesUsers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -919,6 +1016,12 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 name: "IX_UserRoles_UserId",
                 table: "UserRoles",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_OfficeId",
@@ -959,6 +1062,9 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 name: "MetaMediaConfigs");
 
             migrationBuilder.DropTable(
+                name: "PropertiesUsers");
+
+            migrationBuilder.DropTable(
                 name: "SingleCreatives");
 
             migrationBuilder.DropTable(
@@ -983,9 +1089,6 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Budgets");
-
-            migrationBuilder.DropTable(
                 name: "CarouselCreatives");
 
             migrationBuilder.DropTable(
@@ -1004,7 +1107,13 @@ namespace MakeAdsApi.Infrastructure.Migrations
                 name: "Roles");
 
             migrationBuilder.DropTable(
+                name: "Budgets");
+
+            migrationBuilder.DropTable(
                 name: "BaseCreatives");
+
+            migrationBuilder.DropTable(
+                name: "Properties");
 
             migrationBuilder.DropTable(
                 name: "Files");

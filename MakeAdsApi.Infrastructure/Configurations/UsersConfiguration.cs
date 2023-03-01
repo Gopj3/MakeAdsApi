@@ -10,6 +10,9 @@ public static class UsersConfiguration
 {
     public static void ConfigureUser(this ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>().ToTable("Users");
+        modelBuilder.Entity<User>().HasIndex(x => x.Email).IsUnique();
+        
         modelBuilder.Entity<User>()
             .HasOne(u => u.Profile)
             .WithOne(up => up.User);
@@ -34,6 +37,10 @@ public static class UsersConfiguration
 
         modelBuilder.Entity<User>()
             .HasMany(x => x.Orders)
+            .WithOne(x => x.User);
+        
+        modelBuilder.Entity<User>()
+            .HasMany(x => x.Properties)
             .WithOne(x => x.User);
     }
 }

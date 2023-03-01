@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MakeAdsApi.Application.Common.Abstractions.Helpers;
 using MakeAdsApi.Application.Common.Abstractions.Services.AWS;
+using MakeAdsApi.Application.Enums;
 using Microsoft.AspNetCore.Http;
 
 namespace MakeAdsApi.Application.Services.Helpers;
@@ -21,7 +22,7 @@ public class FilesHelper : IFilesHelper
         _s3Service = awsS3Service;
     }
 
-    public async Task<MemoryStream> UrlToMemoryStream(string url)
+    public async Task<MemoryStream> UrlToMemoryStreamAsync(string url)
     {
         var response = await _httpClient.GetAsync(url);
         var bytes = await response.Content.ReadAsByteArrayAsync();
@@ -29,12 +30,12 @@ public class FilesHelper : IFilesHelper
         return new MemoryStream(bytes);
     }
 
-    public async Task<string?> UploadImageFormFileToAwsAsync(IFormFile? formFile,
+    public async Task<string?> UploadImageFormFileToAwsAsync(IFormFile? formFile, Folders folder,
         CancellationToken cancellationToken = default)
     {
         if (formFile is not null)
         {
-            if (await _s3Service.WriteObjectAsync(formFile, cancellationToken))
+            if (await _s3Service.WriteObjectAsync(formFile, folder, cancellationToken))
             {
                 return _s3Service.GetPreSignedUrl(formFile.FileName);
             }
@@ -45,6 +46,7 @@ public class FilesHelper : IFilesHelper
 
     public async Task<string?> UploadImageToAwsFromUrlAsync(
         string url,
+        Folders folder,
         string? fileName = null,
         CancellationToken cancellationToken = default
     )
@@ -55,10 +57,25 @@ public class FilesHelper : IFilesHelper
             fileName = GenerateFileName(extension);
         }
 
-        var stream = await UrlToMemoryStream(url);
-        if (await _s3Service.WriteObjectAsync(stream, fileName, cancellationToken))
+        var stream = await UrlToMemoryStreamAsync(url);
+        if (await _s3Service.WriteObjectAsync(stream, folder, fileName, cancellationToken))
         {
-            return _s3Service.GetPreSignedUrl(fileName);
+            var createdFileName = folder + "/" + fileName;
+            await stream.DisposeAsync();
+            return _s3Service.GetPreSignedUrl(createdFileName);
+        }
+        
+        await stream.DisposeAsync();
+        return null;
+    }
+    
+    public string? GetFileNameFromPreSignedUrl(string preSignedUrl)
+    {
+        var awsPreSignedPart = "Expires";
+        if (preSignedUrl.Contains(awsPreSignedPart))
+        {
+            var firstPart = preSignedUrl.Split("?").First();
+            return firstPart.Split("/").Last();
         }
 
         return null;

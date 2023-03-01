@@ -11,6 +11,7 @@ using MakeAdsApi.Domain.Entities.Files;
 using MakeAdsApi.Domain.Entities.Files.MediaLibrary;
 using MakeAdsApi.Domain.Entities.Offices;
 using MakeAdsApi.Domain.Entities.Orders;
+using MakeAdsApi.Domain.Entities.Properties;
 using MakeAdsApi.Domain.Entities.Users;
 using MakeAdsApi.Domain.Entities.RetailDataProviders;
 using MakeAdsApi.Domain.Entities.SocialMedias;
@@ -55,6 +56,8 @@ public class MakeAdsDbContext : DbContext
     public DbSet<AdSetLocation> AdSetLocations { get; set; }
     public DbSet<Advertise> Advertises { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<Property> Properties { get; set; }
+    public DbSet<PropertyUser> PropertyUsers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -74,6 +77,7 @@ public class MakeAdsDbContext : DbContext
         modelBuilder.ConfigureCampaigns();
         modelBuilder.ConfigureAdSets();
         modelBuilder.ConfigureAdvertises();
+        modelBuilder.ConfigureProperties();
 
         base.OnModelCreating(modelBuilder);
     }

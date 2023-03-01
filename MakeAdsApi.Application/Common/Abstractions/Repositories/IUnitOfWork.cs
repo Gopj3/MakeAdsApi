@@ -27,5 +27,7 @@ public interface IUnitOfWork : IDisposable
     IAdSetLocationRepository AdSetLocationRepository { get; set; }
     IAdSetRepository AdSetRepository { get; set; }
     ICampaignRepository CampaignRepository { get; set; }
+    IPropertyRepository PropertyRepository { get; set; }
+    IMediaLibraryImageRepository MediaLibraryImageRepository { get; set; }
     Task SaveChangesAsync(CancellationToken cancellationToken = default);
 }

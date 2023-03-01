@@ -14,5 +14,7 @@ public interface IUserRepository: IGenericRepository<User>
     Task<PagedList<User>> GetPaginatedWithSearchAsync(int page, int pageSize, string? search = null,
         CancellationToken cancellationToken = default);
 
-    Task<User?> GetWithProfileById(Guid id, CancellationToken cancellationToken = default);
+    Task<User?> GetWithProfileByIdAsync(Guid id, CancellationToken cancellationToken = default);
+
+    Task<User?> GetWithOfficeAndCompanyByIdAsync(Guid id, CancellationToken cancellationToken = default);
 }

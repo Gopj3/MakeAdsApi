@@ -6,6 +6,7 @@ using MakeAdsApi.Application.Common.Abstractions.Authentication;
 using MakeAdsApi.Application.Common.Abstractions.Helpers;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
 using MakeAdsApi.Application.Common.Abstractions.Services.Users;
+using MakeAdsApi.Application.Enums;
 using MakeAdsApi.Application.RetailProviders.Common.Models;
 using MakeAdsApi.Domain.Entities.Companies;
 using MakeAdsApi.Domain.Entities.Files;
@@ -94,7 +95,7 @@ public class UsersAutoCreateService : IUsersAutoCreateService
         var fileName = _filesHelper.GenerateFileName(extension);
 
         var preSignedUrl =
-            await _filesHelper.UploadImageToAwsFromUrlAsync(result.EmployeeAvatar, fileName, cancellationToken);
+            await _filesHelper.UploadImageToAwsFromUrlAsync(result.EmployeeAvatar, Folders.Avatars, fileName, cancellationToken);
 
         if (preSignedUrl is not null)
         {

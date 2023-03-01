@@ -31,7 +31,7 @@ public class PagedList<T> : List<T>
         CancellationToken cancellationToken = default)
     {
         var count = await source.CountAsync(cancellationToken);
-        List<T> items = await source.Skip((pageNumber) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
+        List<T> items = await source.Skip(pageNumber * pageSize).Take(pageSize).ToListAsync(cancellationToken);
 
         return new PagedList<T>(items, count, pageNumber, pageSize);
     }

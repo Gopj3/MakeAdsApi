@@ -18,5 +18,6 @@ internal static class MediaLibraryConfiguration
         modelBuilder.Entity<UserProfile>()
             .HasOne(x => x.Avatar)
             .WithOne(x => x.UserProfile);
+        modelBuilder.Entity<BaseMediaLibraryFile>().HasOne(x => x.Property).WithMany();
     }
 }

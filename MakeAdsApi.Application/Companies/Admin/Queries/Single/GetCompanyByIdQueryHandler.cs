@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using ErrorOr;
 using MakeAdsApi.Application.Common.Abstractions.Repositories;
 using MakeAdsApi.Application.Companies.Admin.Models;
@@ -11,10 +12,12 @@ namespace MakeAdsApi.Application.Companies.Admin.Queries.Single;
 public class GetCompanyByIdQueryHandler : IRequestHandler<GetCompanyByIdQuery, ErrorOr<CompanyViewModel>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public GetCompanyByIdQueryHandler(IUnitOfWork unitOfWork)
+    public GetCompanyByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<ErrorOr<CompanyViewModel>> Handle(
@@ -29,6 +32,6 @@ public class GetCompanyByIdQueryHandler : IRequestHandler<GetCompanyByIdQuery, E
             return DomainErrors.Company.NotFound;
         }
 
-        return CompanyViewModel.From(company);
+        return _mapper.Map<CompanyViewModel>(company);
     }
 }

@@ -20,7 +20,7 @@ public static class AdvertisesConfiguration
 
         modelBuilder.Entity<Advertise>()
             .HasOne(x => x.Creative)
-            .WithOne();
+            .WithOne(x => x.Advertise);
 
         modelBuilder.Entity<Advertise>()
             .HasOne(x => x.Order)

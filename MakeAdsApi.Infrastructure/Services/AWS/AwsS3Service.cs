@@ -1,7 +1,6 @@
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
-using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +9,7 @@ using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.S3.Model;
 using MakeAdsApi.Application.Common.Abstractions.Services.AWS;
+using MakeAdsApi.Application.Enums;
 using MakeAdsApi.Infrastructure.Common.AWS;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -39,7 +39,7 @@ public class AwsS3Service : IAwsS3Service
         );
     }
 
-    public async Task<bool> WriteObjectAsync(MemoryStream stream, string fileName,
+    public async Task<bool> WriteObjectAsync(MemoryStream stream, Folders folder, string fileName,
         CancellationToken cancellationToken = default)
     {
         try
@@ -47,7 +47,7 @@ public class AwsS3Service : IAwsS3Service
             var request = new PutObjectRequest
             {
                 BucketName = _awsSettings.BucketName,
-                Key = fileName,
+                Key = folder + "/" + fileName,
                 InputStream = stream
             };
 
@@ -67,14 +67,14 @@ public class AwsS3Service : IAwsS3Service
         return false;
     }
 
-    public async Task<bool> WriteObjectAsync(IFormFile formFile, CancellationToken cancellationToken = default)
+    public async Task<bool> WriteObjectAsync(IFormFile formFile, Folders folder, CancellationToken cancellationToken = default)
     {
         try
         {
             var request = new PutObjectRequest
             {
                 BucketName = _awsSettings.BucketName,
-                Key = formFile.FileName,
+                Key = folder + "/" + formFile.FileName,
                 InputStream = formFile.OpenReadStream()
             };
 

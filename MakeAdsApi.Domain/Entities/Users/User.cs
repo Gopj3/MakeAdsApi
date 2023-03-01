@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MakeAdsApi.Domain.Entities.Offices;
 using ErrorOr;
 using MakeAdsApi.Domain.Entities.Orders;
+using MakeAdsApi.Domain.Entities.Properties;
 
 namespace MakeAdsApi.Domain.Entities.Users;
 
@@ -16,4 +17,5 @@ public class User: BaseEntity
     public Office? Office { get; set; }
     public List<UserRole> UserRoles { get; set; } = new();
     public List<Order> Orders { get; set; } = new();
+    public List<PropertyUser> Properties { get; set; } = new();
 }

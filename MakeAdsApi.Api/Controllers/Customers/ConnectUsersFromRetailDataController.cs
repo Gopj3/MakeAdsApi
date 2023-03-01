@@ -3,7 +3,7 @@ using MakeAdsApi.Contracts.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MakeAdsApi.Api.Controllers.Users;
+namespace MakeAdsApi.Api.Controllers.Customers;
 
 public class ConnectUsersFromRetailDataController: ApiController
 {
@@ -26,6 +26,6 @@ public class ConnectUsersFromRetailDataController: ApiController
         var command = new ConnectUserFromRetailDataCommand(companyId, request.PropertyId);
         var res = await _mediator.Send(command);
 
-        return res.Match(x => Ok(), Problem);
+        return res.Match(Ok, Problem);
     }
 }
